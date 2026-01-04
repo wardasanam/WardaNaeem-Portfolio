@@ -15,8 +15,9 @@ import {
   Code2, Briefcase, GraduationCap, User, Mail, GripVertical, Palette, X, Check, MapPin,
   Heart, MessageCircle, Share2, Bookmark, Repeat, MoreHorizontal, Search, Home, Bell, Music2, Instagram, Facebook, Twitter, ThumbsUp, MessageSquare,
   Terminal, Award, Coffee, Plane, Play, Pause, Disc, Sticker, Zap, Smile, Rocket, Send, Users, Video, Store, Hash, List, Compass, Clock, ExternalLink, Github, Linkedin, Loader2, PenTool, Trash2, Eraser, RefreshCw, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Gamepad2, Headphones, Camera, StickyNote,
+  AlertTriangle, ShieldCheck,
   // Funny Coding Icons
-  Bug, Flame, Skull, Laptop, AlertTriangle, MonitorPlay,
+  Bug, Flame, Skull, Laptop, MonitorPlay,
   // Project Icons
   CreditCard, Brain, Bot, Link, Image, Mic, Film, CheckSquare, Layers, BarChart2, Star, Quote,
   // Arsenal Icons
@@ -291,7 +292,7 @@ const UI_TRANSLATIONS = {
     techTrending: "Technologie · Trends",
     showMore: "Mehr anzeigen",
     // Facebook Sidebar Items
-    memories: "Erinnerungen",
+    memories: "Memories",
     saved: "Gespeichert",
     groups: "Gruppen",
     video: "Video",
@@ -538,160 +539,54 @@ const TestimonialsHub = ({ items, theme, t }) => {
   );
 };
 
-// --- REDESIGNED 3D PROJECT HUB ---
-const ProjectHub = ({ projects, theme, t }) => {
-  const [isActive, setIsActive] = useState(false);
-  const isDark = theme === 'tiktok' || theme === 'twitter';
-  const textColor = isDark ? 'text-white' : 'text-black';
-  
-  const toggleActive = () => {
-    playSound(isActive ? 'click' : 'success');
-    setIsActive(!isActive);
-  };
-
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-  const radius = isMobile ? 110 : 155; 
-  const containerSize = isActive ? 'h-[460px]' : 'h-[200px]';
+// --- UPDATED PROJECT GALLERY (CLEAN GRID CARDS) ---
+const ProjectGallery = ({ projects, theme, onProjectClick, t }) => {
+  const isTikTok = theme === 'tiktok';
+  const isFacebook = theme === 'facebook';
+  const isTwitter = theme === 'twitter';
 
   return (
-    <div className={`w-full relative flex flex-col items-center justify-center overflow-hidden transition-all duration-700 ease-[cubic-bezier(0.25,0.8,0.25,1)] ${containerSize} bg-transparent perspective-[1000px]`}>
-      
-      {/* 3D Environment Effects */}
-      <AnimatePresence>
-        {isActive && (
-           <motion.div 
-             initial={{ opacity: 0 }}
-             animate={{ opacity: 1 }}
-             exit={{ opacity: 0 }}
-             className="absolute inset-0 pointer-events-none z-0"
-           >
-             {isDark ? (
-                 <>
-                   <motion.div 
-                       className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px]"
-                       animate={{ rotate: 360, scale: [1, 1.1, 1] }}
-                       transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-                       style={{
-                       background: 'radial-gradient(circle, rgba(236, 72, 153, 0.15) 0%, rgba(124, 58, 237, 0.05) 40%, transparent 70%)',
-                       filter: 'blur(40px)',
-                       }}
-                   />
-                   <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px] [transform:perspective(500px)_rotateX(60deg)] opacity-30 origin-bottom"></div>
-                 </>
-             ) : (
-                 <div className="absolute inset-0 bg-gradient-to-br from-purple-100/50 via-blue-50/50 to-pink-100/50" />
-             )}
-           </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Intro Label */}
-      <AnimatePresence>
-        {!isActive && (
-            <motion.div 
-                initial={{ opacity: 0, y: -20, rotateX: 20 }}
-                animate={{ opacity: 1, y: 0, rotateX: 0 }}
-                exit={{ opacity: 0, y: -20, rotateX: -20 }}
-                className={`absolute top-4 w-full flex items-center justify-between px-6 ${textColor} z-20`}
-            >
-                <h3 className="text-xl font-black flex items-center gap-2 drop-shadow-xl">
-                <Sparkles className="text-pink-500 fill-pink-500 animate-pulse" />
-                <GlitchText text={t('projectHubTitle')} />
-                </h3>
-                <span className="text-[10px] font-bold opacity-70 bg-white/20 backdrop-blur-md px-3 py-1 rounded-full border border-white/30 shadow-lg">{t('tapCenter')}</span>
-            </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Main Trigger Button (Holographic Core) */}
-      <motion.button
-        layout
-        onClick={toggleActive}
-        className={`z-50 relative w-24 h-24 rounded-full flex flex-col items-center justify-center gap-1 shadow-[0_0_50px_rgba(0,0,0,0.3)] transition-all duration-500`}
-        whileHover={{ scale: 1.1, rotate: isActive ? 90 : 0 }}
-        whileTap={{ scale: 0.9 }}
-      >
-         <div className={`absolute inset-0 rounded-full ${isActive ? 'bg-red-500' : 'bg-black'} opacity-80 backdrop-blur-xl border-2 ${isActive ? 'border-red-400' : 'border-white/20'}`}></div>
-         
-         {/* Internal "Core" Glow */}
-         <div className={`absolute inset-2 rounded-full bg-gradient-to-tr ${isActive ? 'from-red-600 to-orange-500' : 'from-pink-500 via-purple-500 to-indigo-500'} animate-pulse`}></div>
-         
-         {/* Glass Shine */}
-         <div className="absolute top-2 left-4 right-4 h-8 bg-gradient-to-b from-white/40 to-transparent rounded-full blur-[2px]"></div>
-         
-         <div className="relative z-10 text-white drop-shadow-md">
-            {isActive ? <X size={32} strokeWidth={3} /> : <Gamepad2 size={32} strokeWidth={2} />}
-         </div>
-         
-         {!isActive && (
-            <div className="absolute -inset-4 border border-pink-500/30 rounded-full animate-[spin_4s_linear_infinite]"></div>
-         )}
-      </motion.button>
-
-      {/* Orbiting 3D Icons */}
-      <AnimatePresence>
-        {isActive && projects.map((p, i) => {
-           const count = projects.length;
-           const angle = (i / count) * 2 * Math.PI - (Math.PI / 2); 
-           const x = Math.cos(angle) * radius;
-           const y = Math.sin(angle) * radius;
-
-           return (
-             <motion.div
-                key={i}
-                initial={{ x: 0, y: 0, scale: 0, opacity: 0 }}
-                animate={{ x, y, scale: 1, opacity: 1 }}
-                exit={{ x: 0, y: 0, scale: 0, opacity: 0 }}
-                transition={{ 
-                  type: "spring", 
-                  stiffness: 150, 
-                  damping: 12, 
-                  delay: i * 0.03 
-                }}
-                className="absolute w-20 h-20 z-40" 
-                style={{ 
-                  left: '50%', 
-                  top: '50%',
-                  marginTop: -40,
-                  marginLeft: -40 
-                }}
-             >
-                <motion.a 
-                   href={p.link}
-                   target="_blank"
-                   rel="noopener noreferrer"
-                   className="block w-full h-full relative group perspective-[500px]"
-                   whileHover={{ scale: 1.15, zIndex: 100 }}
-                >
-                   <div className={`w-full h-full rounded-2xl bg-gradient-to-b ${p.color} relative shadow-[0_10px_20px_rgba(0,0,0,0.4),_inset_0_4px_8px_rgba(255,255,255,0.4),_inset_0_-4px_8px_rgba(0,0,0,0.2)] border border-white/20 overflow-hidden transform transition-transform duration-300 group-hover:-translate-y-2`}>
-                      
-                      <div className="absolute top-0 left-1/4 right-1/4 h-1/2 bg-gradient-to-b from-white/60 to-transparent rounded-full blur-[6px]"></div>
-                      <div className="absolute bottom-2 left-1/4 right-1/4 h-1/4 bg-gradient-to-t from-white/20 to-transparent rounded-full blur-[4px]"></div>
-
-                      <motion.div 
-                        className="absolute inset-0 flex items-center justify-center transition-opacity duration-300 group-hover:opacity-0"
-                        animate={{ y: [0, -4, 0] }}
-                        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: i * 0.1 }}
-                      >
-                         {p.icon && (
-                            <div className="relative w-8 h-8 flex items-center justify-center">
-                                <p.icon size={32} className="absolute top-[2px] left-[2px] text-black/40 blur-[1px] transform scale-95" />
-                                <p.icon size={32} className="relative z-10 text-white drop-shadow-[0_2px_2px_rgba(0,0,0,0.5)] filter contrast-125" strokeWidth={2.5} />
-                            </div>
-                         )}
-                      </motion.div>
-
-                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 p-1">
-                          <span className="text-white text-[10px] font-black uppercase text-center leading-tight drop-shadow-md break-words w-full">
-                              {p.title}
-                          </span>
-                      </div>
-                   </div>
-                </motion.a>
-             </motion.div>
-           );
-        })}
-      </AnimatePresence>
+    <div className="w-full px-4 py-2 grid grid-cols-2 gap-3 pb-4">
+      {projects.map((p, i) => (
+        <motion.button
+          key={i}
+          onClick={() => onProjectClick(p.link)}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ delay: i * 0.05 }}
+          className={`group block relative overflow-hidden transition-all rounded-2xl border text-left ${
+            isTikTok 
+              ? 'aspect-[3/4] bg-zinc-900 border-zinc-800' 
+              : isFacebook
+                ? 'bg-white border-zinc-200 shadow-sm hover:shadow-md'
+                : 'bg-black border-zinc-800 hover:bg-zinc-900/50'
+          }`}
+        >
+          <div className="relative w-full h-full flex flex-col">
+            <div className={`h-24 md:h-32 bg-gradient-to-br ${p.color} flex items-center justify-center relative`}>
+              <p.icon size={32} className="text-white/40 group-hover:scale-110 transition-transform duration-500" />
+              <div className="absolute top-2 right-2 flex gap-1">
+                 <div className="bg-black/30 backdrop-blur-sm p-1 rounded-full"><Sparkles size={10} className="text-yellow-400" /></div>
+              </div>
+            </div>
+            
+            <div className="p-3 flex-1 flex flex-col justify-between">
+              <div>
+                <h4 className={`font-black text-xs md:text-sm leading-tight uppercase ${isTwitter || isTikTok ? 'text-white' : 'text-zinc-900'}`}>{p.title}</h4>
+                <p className="text-[10px] text-zinc-500 mt-1 font-bold">{p.genre.split(' • ')[1] || p.genre}</p>
+              </div>
+              
+              <div className="mt-3 flex items-center justify-between border-t border-zinc-200/10 pt-2">
+                <span className={`text-[10px] font-black ${isFacebook ? 'text-blue-500' : 'text-pink-500'}`}>{p.viewers}</span>
+                <div className="flex gap-2 opacity-40 group-hover:opacity-100 transition-opacity">
+                   <ExternalLink size={12} className={isTwitter || isTikTok ? 'text-white' : 'text-black'} />
+                </div>
+              </div>
+            </div>
+            <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+          </div>
+        </motion.button>
+      ))}
     </div>
   );
 };
@@ -955,7 +850,7 @@ const MatrixRain = () => {
       }
     };
     const interval = setInterval(draw, 33);
-    return () => clearInterval(draw);
+    return () => clearInterval(interval);
   }, []);
   return <canvas ref={canvasRef} className="fixed inset-0 z-0 bg-black pointer-events-none" />;
 };
@@ -1265,93 +1160,51 @@ const CreativeSidebarRight = () => {
     );
 }
 
-const TikTokLayout = ({ data, sectionType, onLike, likeCount, isLiked, user, t }) => {
-  const [activeTab, setActiveTab] = useState('foryou'); // 'foryou' | 'live'
+const TikTokLayout = ({ data, sectionType, onLike, likeCount, isLiked, onProjectClick, t }) => {
+  const [activeTab, setActiveTab] = useState('foryou'); 
 
   return (
     <div className="relative w-full h-full bg-black text-white">
-      {/* Background (common) */}
       <div className="absolute inset-0 z-0 bg-zinc-900 pointer-events-none">
          <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/90" />
          <motion.div animate={{ scale: [1, 1.1, 1], rotate: [0, 5, 0] }} transition={{ duration: 10, repeat: Infinity }} className="absolute top-1/4 left-1/4 w-96 h-96 bg-pink-600/20 rounded-full blur-[100px]" />
       </div>
 
-      {/* Header Tabs */}
       <div className="absolute top-4 w-full flex justify-center items-center z-50 text-sm font-bold shadow-black drop-shadow-md">
          <div className="flex gap-4">
-             <button 
-               onClick={() => setActiveTab('foryou')}
-               className={`cursor-pointer transition-opacity ${activeTab === 'foryou' ? 'text-white border-b-2 border-white pb-1' : 'text-white/60 hover:text-white/90'}`}
-             >
-               {t('forYou')}
-             </button>
+             <button onClick={() => setActiveTab('foryou')} className={`cursor-pointer transition-opacity ${activeTab === 'foryou' ? 'text-white border-b-2 border-white pb-1' : 'text-white/60 hover:text-white/90'}`}>{t('forYou')}</button>
              <span className="opacity-40">|</span>
-             <button 
-               onClick={() => setActiveTab('live')}
-               className={`cursor-pointer transition-opacity ${activeTab === 'live' ? 'text-white border-b-2 border-white pb-1' : 'text-white/60 hover:text-white/90'}`}
-             >
-               {t('live')}
-             </button>
+             <button onClick={() => setActiveTab('live')} className={`cursor-pointer transition-opacity ${activeTab === 'live' ? 'text-white border-b-2 border-white pb-1' : 'text-white/60 hover:text-white/90'}`}>{t('live')}</button>
          </div>
-         <div className="absolute right-4">
-            <Search size={20} className="text-white" />
-         </div>
+         <div className="absolute right-4"><Search size={20} className="text-white" /></div>
       </div>
 
-      {/* Content Area */}
       <div className="relative w-full h-full flex items-center justify-center pt-20 pb-20">
          {activeTab === 'live' ? (
-            <div className="w-full h-full flex flex-col items-center justify-center">
-               <TikTokDesktopSidebar type={sectionType} data={data} t={t} />
-            </div>
+            <div className="w-full h-full flex flex-col items-center justify-center"><TikTokDesktopSidebar type={sectionType} data={data} t={t} /></div>
          ) : (
             <div className="w-full h-full flex flex-row items-center justify-center relative px-4">
                <CreativeSidebarLeft sectionType={sectionType} />
-
-               {/* Main Scrollable Content */}
                <div className="w-full max-w-md h-full flex flex-col justify-center relative z-20">
                    <div className="flex-1 mb-4 flex flex-col justify-center max-h-full min-w-0">
-                      {/* Title & Description */}
-                      <h3 className="font-bold text-lg text-white shadow-black drop-shadow-md mb-2">
-                        @{data.id === 'intro' ? 'warda.dev' : <GlitchText text={data.title} />}
-                      </h3>
-                      
-                      {/* Scrollable Area */}
+                      <h3 className="font-bold text-lg text-white shadow-black drop-shadow-md mb-2">@{data.id === 'intro' ? 'warda.dev' : <GlitchText text={data.title} />}</h3>
                       <div className="overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-white/20 max-h-[70vh]">
                           {sectionType === 'intro' && (
                             <div className="text-white/90 text-sm space-y-4">
-                              {/* Stats Row */}
                               <div className="flex gap-4 mb-2">
-                                 <div className="bg-white/10 backdrop-blur-md px-3 py-2 rounded-lg text-center">
-                                    <p className="font-bold text-lg">5+</p>
-                                    <p className="text-[10px] text-zinc-400 uppercase">{t('years')}</p>
-                                 </div>
-                                 <div className="bg-white/10 backdrop-blur-md px-3 py-2 rounded-lg text-center">
-                                    <p className="font-bold text-lg">50+</p>
-                                    <p className="text-[10px] text-zinc-400 uppercase">{t('projects')}</p>
-                                 </div>
-                                 <div className="bg-white/10 backdrop-blur-md px-3 py-2 rounded-lg text-center">
-                                    <p className="font-bold text-lg">∞</p>
-                                    <p className="text-[10px] text-zinc-400 uppercase">{t('coffee')}</p>
-                                 </div>
+                                 <div className="bg-white/10 backdrop-blur-md px-3 py-2 rounded-lg text-center"><p className="font-bold text-lg">5+</p><p className="text-[10px] text-zinc-400 uppercase">{t('years')}</p></div>
+                                 <div className="bg-white/10 backdrop-blur-md px-3 py-2 rounded-lg text-center"><p className="font-bold text-lg">50+</p><p className="text-[10px] text-zinc-400 uppercase">{t('projects')}</p></div>
+                                 <div className="bg-white/10 backdrop-blur-md px-3 py-2 rounded-lg text-center"><p className="font-bold text-lg">∞</p><p className="text-[10px] text-zinc-400 uppercase">{t('coffee')}</p></div>
                               </div>
-
                               <p className="leading-relaxed">{data.content.summary}</p>
-                              
-                              <div className="flex items-center gap-2 text-xs text-zinc-300">
-                                <MapPin size={14} className="text-pink-500" /> 
-                                {data.content.location}
-                              </div>
-
+                              <div className="flex items-center gap-2 text-xs text-zinc-300"><MapPin size={14} className="text-pink-500" /> {data.content.location}</div>
                               <div className="flex gap-2 mt-2">
                                 <button className="flex-1 bg-pink-600 text-white font-bold py-2 rounded-md hover:bg-pink-700 transition-colors">{t('hireMe')}</button>
                                 <button className="w-10 bg-zinc-800 flex items-center justify-center rounded-md border border-zinc-700"><User size={16}/></button>
                               </div>
-
                               <p className="font-bold text-pink-400 text-xs mt-2">{data.content.hashtags}</p>
                             </div>
                           )}
-                          
                           {sectionType === 'timeline' && (
                             <div className="space-y-4 relative pl-4 border-l border-white/20">
                                {data.items?.map((item, i) => (
@@ -1360,59 +1213,41 @@ const TikTokLayout = ({ data, sectionType, onLike, likeCount, isLiked, user, t }
                                    <div className="bg-zinc-800/80 p-3 rounded-xl border border-zinc-700 hover:border-pink-500 transition-colors">
                                      <h4 className="font-bold text-sm text-white"><GlitchText text={item.role} /></h4>
                                      <p className="text-xs font-bold text-pink-400 mb-1">{item.company}</p>
-                                     <div className="w-full bg-zinc-700 h-1.5 rounded-full mt-2 overflow-hidden">
-                                        <div className="bg-gradient-to-r from-pink-500 to-purple-500 h-full w-3/4 animate-pulse"></div>
-                                     </div>
+                                     <div className="w-full bg-zinc-700 h-1.5 rounded-full mt-2 overflow-hidden"><div className="bg-gradient-to-r from-pink-500 to-purple-500 h-full w-3/4 animate-pulse"></div></div>
                                      <p className="text-[10px] text-zinc-400 mt-2">{item.desc}</p>
                                    </div>
                                  </div>
                                ))}
                             </div>
                           )}
-
                           {sectionType === 'tags' && <SkillMarquee tags={data.tags} theme="tiktok" t={t} />}
                           {sectionType === 'vibe' && <VibeCheck lang={t('lang')} />}
-                          {sectionType === 'projects' && <ProjectHub projects={data.items} theme="tiktok" t={t} />}
+                          {sectionType === 'projects' && <ProjectGallery projects={data.items} theme="tiktok" onProjectClick={onProjectClick} t={t} />}
                           {sectionType === 'testimonials' && <TestimonialsHub items={data.items} theme="tiktok" t={t} />}
-                          
                           {(sectionType === 'education' || sectionType === 'cards') && (
                             <div className="space-y-6 pl-2 relative">
                                <div className="absolute left-[11px] top-2 bottom-2 w-0.5 bg-gradient-to-b from-pink-500 to-purple-600/20"></div>
                                {data.items?.map((item, i) => (
                                  <div key={i} className="relative pl-8">
-                                    <div className="absolute left-0 top-1 w-6 h-6 bg-zinc-900 border-2 border-pink-500 rounded-full flex items-center justify-center z-10">
-                                       <GraduationCap size={12} className="text-white" />
-                                    </div>
+                                    <div className="absolute left-0 top-1 w-6 h-6 bg-zinc-900 border-2 border-pink-500 rounded-full flex items-center justify-center z-10"><GraduationCap size={12} className="text-white" /></div>
                                     <div className="bg-white/5 border border-white/10 p-4 rounded-xl backdrop-blur-md">
                                        <p className="font-bold text-sm text-white"><GlitchText text={item.degree} /></p>
                                        <p className="text-xs text-zinc-400 mt-1">{item.school}</p>
-                                       <div className="mt-2 inline-block bg-green-500/20 text-green-400 text-[10px] font-bold px-2 py-0.5 rounded border border-green-500/30">
-                                          {t('achievement')}
-                                       </div>
+                                       <div className="mt-2 inline-block bg-green-500/20 text-green-400 text-[10px] font-bold px-2 py-0.5 rounded border border-green-500/30">{t('achievement')}</div>
                                     </div>
                                  </div>
                                ))}
                             </div>
                           )}
-                          
-                          {sectionType === 'contact' && <div className="flex flex-col gap-2">{data.links?.map((l, i) => (<a key={i} href={l.href} target="_blank" className="flex items-center gap-2 text-white/90 hover:text-pink-400"><l.icon size={16} /><span className="text-sm">{l.val}</span></a>))} <ContactForm theme="tiktok" user={user} t={t} /></div>}
+                          {sectionType === 'contact' && <div className="flex flex-col gap-2">{data.links?.map((l, i) => (<a key={i} href={l.href} target="_blank" className="flex items-center gap-2 text-white/90 hover:text-pink-400"><l.icon size={16} /><span className="text-sm">{l.val}</span></a>))} <ContactForm theme="tiktok" t={t} /></div>}
                       </div>
-                      
-                      {/* Song Info */}
                       <div className="flex items-center justify-between gap-2 text-white/80 mt-4 pt-4 border-t border-white/10">
-                        <div className="flex items-center gap-2">
-                          <Music2 size={14} className="animate-spin-slow" />
-                          <p className="text-xs">Original Sound - Warda Naeem</p>
-                        </div>
+                        <div className="flex items-center gap-2"><Music2 size={14} className="animate-spin-slow" /><p className="text-xs">Original Sound - Warda Naeem</p></div>
                         <div className="animate-spin-slow"><Disc size={24} /></div>
                       </div>
                    </div>
                </div>
-
-               {/* Right Action Bar */}
                <ActionSidebar onLike={onLike} likeCount={likeCount} themeId="tiktok" isLiked={isLiked} />
-
-               {/* Right "Activity" Sidebar (Desktop) */}
                <CreativeSidebarRight />
             </div>
          )}
@@ -1421,275 +1256,158 @@ const TikTokLayout = ({ data, sectionType, onLike, likeCount, isLiked, user, t }
   );
 };
 
-const InstagramLayout = ({ data, sectionType, onStoryClick, onLike, isLiked, likeCount, user, t }) => {
+const InstagramLayout = ({ data, sectionType, onStoryClick, onProjectClick, t }) => {
   const [activeTab, setActiveTab] = useState('grid'); 
-
   if (sectionType !== 'intro') return null;
-
   return (
     <div className="w-full bg-white min-h-screen flex flex-col items-center pb-20"> 
-      
-      {/* 1. Header & Bio */}
       <div className="max-w-xl w-full pt-4 px-4 pb-2">
         <div className="flex items-center justify-between mb-4">
              <div className="relative group cursor-pointer" onClick={onStoryClick}>
                 <div className="w-20 h-20 rounded-full p-[2px] bg-gradient-to-tr from-yellow-400 via-red-500 to-purple-500">
-                    <div className="w-full h-full bg-white rounded-full p-[1px] overflow-hidden">
-                       <img src={PROFILE.avatar} alt="Profile" className="w-full h-full object-cover rounded-full" />
-                    </div>
+                    <div className="w-full h-full bg-white rounded-full p-[1px] overflow-hidden"><img src={PROFILE.avatar} alt="Profile" className="w-full h-full object-cover rounded-full" /></div>
                 </div>
-                <div className="absolute bottom-0 right-0 bg-blue-500 text-white rounded-full p-0.5 border-2 border-white">
-                   <Check size={10} strokeWidth={4} />
-                </div>
+                <div className="absolute bottom-0 right-0 bg-blue-500 text-white rounded-full p-0.5 border-2 border-white"><Check size={10} strokeWidth={4} /></div>
              </div>
-             
              <div className="flex flex-1 justify-around text-center ml-4">
                 <div><p className="font-bold text-lg leading-tight">50+</p><p className="text-xs text-gray-500">{t('projects')}</p></div>
                 <div><p className="font-bold text-lg leading-tight">1.2k</p><p className="text-xs text-gray-500">{t('followers')}</p></div>
                 <div><p className="font-bold text-lg leading-tight">250</p><p className="text-xs text-gray-500">{t('following')}</p></div>
              </div>
         </div>
-
         <div>
            <h1 className="font-bold text-sm">{data.content.name}</h1>
            <p className="text-sm text-gray-500">{data.content.role}</p>
            <p className="text-sm text-gray-900 mt-1 whitespace-pre-line">{data.content.summary}</p>
-           <div className="flex items-center gap-1 mt-1 text-xs text-gray-500">
-               <MapPin size={12} /> {data.content.location}
-           </div>
+           <div className="flex items-center gap-1 mt-1 text-xs text-gray-500"><MapPin size={12} /> {data.content.location}</div>
            <a href="#" className="text-blue-900 text-sm font-medium mt-1 block">wardanaeem.dev</a>
         </div>
-        
-        {/* Action Buttons */}
         <div className="flex gap-2 mt-4 mb-6">
             <button className="flex-1 bg-blue-500 text-white font-bold py-1.5 rounded-lg text-sm shadow-sm active:scale-95 transition-transform">{t('follow')}</button>
             <button className="flex-1 bg-gray-100 text-black font-bold py-1.5 rounded-lg text-sm border border-gray-200 active:scale-95 transition-transform">{t('message')}</button>
             <button className="bg-gray-100 p-1.5 rounded-lg border border-gray-200"><User size={20} /></button>
         </div>
-
-        {/* Highlights */}
         <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide mb-2">
            {[{ label: 'Work', icon: Briefcase }, { label: 'Skills', icon: Code2 }, { label: 'Life', icon: Coffee }, { label: 'Travel', icon: Plane }].map((h, i) => (
              <div key={i} className="flex flex-col items-center gap-1 min-w-[64px] cursor-pointer" onClick={() => playSound('pop')}>
-                <div className="w-16 h-16 rounded-full border border-gray-200 p-1">
-                   <div className="w-full h-full bg-gray-50 rounded-full flex items-center justify-center text-gray-700">
-                      <h.icon size={24} strokeWidth={1.5} />
-                   </div>
-                </div>
+                <div className="w-16 h-16 rounded-full border border-gray-200 p-1"><div className="w-full h-full bg-gray-50 rounded-full flex items-center justify-center text-gray-700"><h.icon size={24} strokeWidth={1.5} /></div></div>
                 <span className="text-xs">{h.label}</span>
              </div>
            ))}
         </div>
       </div>
 
-      {/* 2. Navigation Tabs */}
       <div className="w-full max-w-xl border-t border-gray-200 flex sticky top-0 bg-white z-20">
-         <button 
-           onClick={() => { setActiveTab('grid'); playSound('switch'); }} 
-           className={`flex-1 flex justify-center py-3 border-b-2 transition-colors ${activeTab === 'grid' ? 'border-black text-black' : 'border-transparent text-gray-400'}`}
-         >
-           <Grid size={24} />
-         </button>
-         <button 
-           onClick={() => { setActiveTab('list'); playSound('switch'); }} 
-           className={`flex-1 flex justify-center py-3 border-b-2 transition-colors ${activeTab === 'list' ? 'border-black text-black' : 'border-transparent text-gray-400'}`}
-         >
-           <FileText size={24} />
-         </button>
-         <button 
-           onClick={() => { setActiveTab('tagged'); playSound('switch'); }} 
-           className={`flex-1 flex justify-center py-3 border-b-2 transition-colors ${activeTab === 'tagged' ? 'border-black text-black' : 'border-transparent text-gray-400'}`}
-         >
-           <Tag size={24} />
-         </button>
-         <button 
-           onClick={() => { setActiveTab('contact'); playSound('switch'); }} 
-           className={`flex-1 flex justify-center py-3 border-b-2 transition-colors ${activeTab === 'contact' ? 'border-black text-black' : 'border-transparent text-gray-400'}`}
-         >
-           <Mail size={24} />
-         </button>
+         <button onClick={() => { setActiveTab('grid'); playSound('switch'); }} className={`flex-1 flex justify-center py-3 border-b-2 transition-colors ${activeTab === 'grid' ? 'border-black text-black' : 'border-transparent text-gray-400'}`}><Grid size={24} /></button>
+         <button onClick={() => { setActiveTab('list'); playSound('switch'); }} className={`flex-1 flex justify-center py-3 border-b-2 transition-colors ${activeTab === 'list' ? 'border-black text-black' : 'border-transparent text-gray-400'}`}><FileText size={24} /></button>
+         <button onClick={() => { setActiveTab('tagged'); playSound('switch'); }} className={`flex-1 flex justify-center py-3 border-b-2 transition-colors ${activeTab === 'tagged' ? 'border-black text-black' : 'border-transparent text-gray-400'}`}><Tag size={24} /></button>
+         <button onClick={() => { setActiveTab('contact'); playSound('switch'); }} className={`flex-1 flex justify-center py-3 border-b-2 transition-colors ${activeTab === 'contact' ? 'border-black text-black' : 'border-transparent text-gray-400'}`}><Mail size={24} /></button>
       </div>
 
-      {/* 3. Content Area */}
       <div className="w-full max-w-xl min-h-[400px]">
         <AnimatePresence mode="wait">
           {activeTab === 'grid' && (
-             <motion.div 
-               key="grid" 
-               initial={{ opacity: 0 }} 
-               animate={{ opacity: 1 }} 
-               exit={{ opacity: 0 }}
-               className="grid grid-cols-3 gap-1"
-             >
+             <motion.div key="grid" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="grid grid-cols-3 gap-1">
                 {GET_SECTIONS(t).find(s => s.id === 'projects').items.map((p, i) => (
-                   <motion.a 
-                     key={i} 
-                     href={p.link}
-                     target="_blank"
-                     rel="noopener noreferrer"
-                     className={`block aspect-square relative group overflow-hidden bg-gradient-to-br ${p.color} cursor-pointer`}
-                     whileHover={{ scale: 0.98 }}
-                   >
-                      <div className="absolute inset-0 flex items-center justify-center text-white">
-                         {p.icon && <p.icon size={32} className="drop-shadow-lg" />}
-                      </div>
+                   <motion.button key={i} onClick={() => onProjectClick(p.link)} className={`block aspect-square relative group overflow-hidden bg-gradient-to-br ${p.color} cursor-pointer`} whileHover={{ scale: 0.98 }}>
+                      <div className="absolute inset-0 flex items-center justify-center text-white">{p.icon && <p.icon size={32} className="drop-shadow-lg" />}</div>
                       <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity duration-200">
-                         <div className="text-white font-bold text-xs text-center px-2">
-                           <Heart size={16} className="inline mr-1 fill-white" /> 1.2k
-                           <br/>
-                           {p.title}
-                         </div>
+                         <div className="text-white font-bold text-xs text-center px-2"><Heart size={16} className="inline mr-1 fill-white" /> 1.2k<br/>{p.title}</div>
                       </div>
-                   </motion.a>
+                   </motion.button>
                 ))}
              </motion.div>
           )}
-
           {activeTab === 'list' && (
-             <motion.div 
-               key="list" 
-               initial={{ opacity: 0 }} 
-               animate={{ opacity: 1 }} 
-               exit={{ opacity: 0 }}
-               className="p-4 space-y-6"
-             >
-                {/* Experience */}
+             <motion.div key="list" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="p-4 space-y-6">
                 <div>
                    <h3 className="font-bold text-sm text-gray-400 uppercase tracking-wider mb-4">Experience</h3>
                    <div className="border-l-2 border-gray-200 ml-2 space-y-6 pl-6 relative">
                       {GET_SECTIONS(t).find(s => s.id === 'experience').items.map((item, i) => (
-                         <div key={i} className="relative">
-                            <div className="absolute -left-[31px] top-1 w-4 h-4 bg-white border-2 border-gray-300 rounded-full"></div>
-                            <h4 className="font-bold text-sm">{item.role}</h4>
-                            <p className="text-xs text-blue-600 font-semibold">{item.company}</p>
-                            <p className="text-sm text-gray-600 mt-1">{item.desc}</p>
-                         </div>
+                         <div key={i} className="relative"><div className="absolute -left-[31px] top-1 w-4 h-4 bg-white border-2 border-gray-300 rounded-full"></div><h4 className="font-bold text-sm">{item.role}</h4><p className="text-xs text-blue-600 font-semibold">{item.company}</p><p className="text-sm text-gray-600 mt-1">{item.desc}</p></div>
                       ))}
                    </div>
                 </div>
-
-                {/* Education */}
                 <div>
                    <h3 className="font-bold text-sm text-gray-400 uppercase tracking-wider mb-4">Education</h3>
                    <div className="space-y-3">
                       {GET_SECTIONS(t).find(s => s.id === 'education').items.map((item, i) => (
-                         <div key={i} className="flex items-center gap-4 bg-gray-50 p-4 rounded-xl">
-                            <div className="w-10 h-10 bg-black text-white rounded-full flex items-center justify-center font-bold text-xs flex-shrink-0">EDU</div>
-                            <div>
-                               <h4 className="font-bold text-sm">{item.degree}</h4>
-                               <p className="text-xs text-gray-500">{item.school}</p>
-                            </div>
-                         </div>
+                         <div key={i} className="flex items-center gap-4 bg-gray-50 p-4 rounded-xl"><div className="w-10 h-10 bg-black text-white rounded-full flex items-center justify-center font-bold text-xs flex-shrink-0">EDU</div><div><h4 className="font-bold text-sm">{item.degree}</h4><p className="text-xs text-gray-500">{item.school}</p></div></div>
                       ))}
                    </div>
                 </div>
              </motion.div>
           )}
-
           {activeTab === 'tagged' && (
-             <motion.div 
-               key="tagged" 
-               initial={{ opacity: 0 }} 
-               animate={{ opacity: 1 }} 
-               exit={{ opacity: 0 }}
-               className="p-4 space-y-6"
-             >
-                <div className="text-center py-4">
-                   <h3 className="font-bold text-lg">{t('mentionsGear')}</h3>
-                   <p className="text-xs text-gray-500">{t('taggedIn')}</p>
-                </div>
-                
+             <motion.div key="tagged" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="p-4 space-y-6">
+                <div className="text-center py-4"><h3 className="font-bold text-lg">{t('mentionsGear')}</h3><p className="text-xs text-gray-500">{t('taggedIn')}</p></div>
                 <SkillMarquee tags={GET_SECTIONS(t).find(s => s.id === 'skills').tags} theme="instagram" t={t} />
-
                 <div className="space-y-4">
                   {GET_SECTIONS(t).find(s => s.id === 'testimonials').items.map((item, i) => (
-                      <div key={i} className="flex gap-3">
-                         <div className="w-8 h-8 bg-gray-200 rounded-full flex-shrink-0"></div>
-                         <div className="bg-gray-50 p-3 rounded-lg rounded-tl-none flex-1">
-                            <p className="text-xs font-bold">{item.user} <span className="font-normal text-gray-500">mentioned you</span></p>
-                            <p className="text-sm text-gray-800 mt-1">"{item.text}"</p>
-                         </div>
-                      </div>
+                      <div key={i} className="flex gap-3"><div className="w-8 h-8 bg-gray-200 rounded-full flex-shrink-0"></div><div className="bg-gray-50 p-3 rounded-lg rounded-tl-none flex-1"><p className="text-xs font-bold">{item.user} <span className="font-normal text-gray-500">mentioned you</span></p><p className="text-sm text-gray-800 mt-1">"{item.text}"</p></div></div>
                   ))}
                 </div>
              </motion.div>
           )}
-
           {activeTab === 'contact' && (
-             <motion.div 
-               key="contact" 
-               initial={{ opacity: 0 }} 
-               animate={{ opacity: 1 }} 
-               exit={{ opacity: 0 }}
-               className="p-4 space-y-6"
-             >
-                <div className="text-center py-4">
-                   <h3 className="font-bold text-lg">{t('getInTouch')}</h3>
-                   <p className="text-xs text-gray-500">{t('findOnline')}</p>
-                </div>
-
+             <motion.div key="contact" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="p-4 space-y-6">
+                <div className="text-center py-4"><h3 className="font-bold text-lg">{t('getInTouch')}</h3><p className="text-xs text-gray-500">{t('findOnline')}</p></div>
                 <div className="space-y-2">
                    {GET_SECTIONS(t).find(s => s.id === 'contact').links.map((l, i) => (
-                      <a key={i} href={l.href} target="_blank" className="flex items-center justify-between p-4 bg-gray-50 hover:bg-gray-100 rounded-xl border border-gray-100 transition-colors group">
-                         <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center border border-gray-200 text-black group-hover:scale-110 transition-transform">
-                               <l.icon size={20} />
-                            </div>
-                            <span className="font-bold text-sm">{l.label}</span>
-                         </div>
-                         <ExternalLink size={16} className="text-gray-400" />
-                      </a>
+                      <a key={i} href={l.href} target="_blank" className="flex items-center justify-between p-4 bg-gray-50 hover:bg-gray-100 rounded-xl border border-gray-100 transition-colors group"><div className="flex items-center gap-3"><div className="w-10 h-10 bg-white rounded-full flex items-center justify-center border border-gray-200 text-black group-hover:scale-110 transition-transform"><l.icon size={20} /></div><span className="font-bold text-sm">{l.label}</span></div><ExternalLink size={16} className="text-gray-400" /></a>
                    ))}
                 </div>
-
-                <div className="border-t border-gray-100 pt-6">
-                   <h4 className="font-bold text-sm mb-4">{t('directMessage')}</h4>
-                   <ContactForm theme="instagram" user={user} t={t} />
-                </div>
+                <div className="border-t border-gray-100 pt-6"><h4 className="font-bold text-sm mb-4">{t('directMessage')}</h4><ContactForm theme="instagram" t={t} /></div>
              </motion.div>
           )}
         </AnimatePresence>
       </div>
-
   </div>
   );
 };
 
-const FacebookLayout = ({ data, sectionType, onLike, isLiked, likeCount, user, t }) => (
+const FacebookLayout = ({ data, sectionType, onLike, isLiked, likeCount, onProjectClick, t }) => (
   <div className="w-full bg-[#F0F2F5] flex justify-center pb-8"> 
      <div className="w-full max-w-xl space-y-2">
         {sectionType === 'intro' ? (
            <div className="bg-white rounded-xl shadow-sm overflow-hidden pb-4 mx-4 md:mx-0 mt-4">
-              <div className="h-32 bg-gray-200 relative">
-                  <img src={PROFILE.cover} alt="Cover" className="w-full h-full object-cover opacity-80" />
-              </div>
+              <div className="h-32 bg-gray-200 relative"><img src={PROFILE.cover} alt="Cover" className="w-full h-full object-cover opacity-80" /></div>
               <div className="px-4 relative">
-                 <div className="-mt-12 mb-3 relative z-10">
-                    <div className="w-32 h-32 rounded-full border-4 border-white bg-zinc-200 overflow-hidden flex items-center justify-center">
-                        <img src={PROFILE.avatar} alt="Profile" className="w-full h-full object-cover" />
-                    </div>
-                 </div>
+                 <div className="-mt-12 mb-3 relative z-10"><div className="w-32 h-32 rounded-full border-4 border-white bg-zinc-200 overflow-hidden flex items-center justify-center"><img src={PROFILE.avatar} alt="Profile" className="w-full h-full object-cover" /></div></div>
                  <div><h1 className="text-2xl font-bold text-black">{data.content.name}</h1><div className="flex items-center gap-1 text-zinc-500 text-sm mt-1"><MapPin size={14} /> {data.content.location}</div><p className="text-zinc-600 font-medium">{data.content.summary}</p></div>
                  <div className="flex gap-2 border-t pt-4 mt-4"><div className="flex-1 bg-[#E7F3FF] text-[#1877F2] py-2 rounded-md font-bold text-center text-sm cursor-pointer">{t('addFriend')}</div><div className="flex-1 bg-zinc-100 text-black py-2 rounded-md font-bold text-center text-sm cursor-pointer">{t('message')}</div></div>
               </div>
            </div>
         ) : (
-          <div className="bg-white rounded-xl shadow-sm mx-4 md:mx-0 mb-2">
-              <div className="p-4 flex items-center justify-between"><div className="flex items-center gap-2"><UserAvatar className="w-10 h-10" /><div><p className="font-bold text-sm text-black">Warda Naeem</p><div className="flex items-center gap-1 text-xs text-zinc-500"><span>Just now</span><span>•</span><span className="font-bold">🌍</span></div></div></div><MoreHorizontal size={20} className="text-zinc-500" /></div>
-              <div className="bg-zinc-50 border-y border-zinc-100 p-6 text-black">
+          <div className="bg-white rounded-xl shadow-sm mx-4 md:mx-0 mb-4 overflow-hidden">
+              <div className="p-4 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <UserAvatar className="w-10 h-10" />
+                  <div>
+                    <p className="font-bold text-sm text-black">Warda Naeem</p>
+                    <div className="flex items-center gap-1 text-xs text-zinc-500">
+                      <span>Just now</span><span>•</span><span className="font-bold">🌍</span>
+                    </div>
+                  </div>
+                </div>
+                <MoreHorizontal size={20} className="text-zinc-500" />
+              </div>
+              
+              <div className="px-4 pb-2">
+                <p className="text-sm text-zinc-800 font-medium mb-4">
+                  Check out my <span className="text-[#1877F2] font-bold">#ProjectHub</span>! These are some of my latest works built with React & Tailwind. 🚀
+                </p>
+              </div>
+
+              <div className="bg-zinc-50 border-y border-zinc-100 p-2 text-black">
                  {sectionType === 'timeline' && (
-                    <div className="relative pl-4 space-y-6">
+                    <div className="relative pl-4 space-y-6 py-4">
                         <div className="absolute left-[21px] top-2 bottom-2 w-0.5 bg-gray-200"></div>
                         {data.items?.map((item, i) => (
                         <motion.div key={i} initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }} className="relative flex gap-4">
-                            <div className="w-10 h-10 rounded-full bg-[#1877F2] text-white flex items-center justify-center border-4 border-[#F0F2F5] z-10 shrink-0">
-                                <Briefcase size={18} />
-                            </div>
+                            <div className="w-10 h-10 rounded-full bg-[#1877F2] text-white flex items-center justify-center border-4 border-[#F0F2F5] z-10 shrink-0"><Briefcase size={18} /></div>
                             <div className="bg-white p-4 rounded-xl shadow-sm border border-zinc-100 flex-1">
-                                <div className="flex items-center justify-between mb-1">
-                                    <h4 className="font-bold text-lg text-zinc-800 leading-tight">{item.role}</h4>
-                                    <span className="text-[10px] font-bold bg-[#E7F3FF] text-[#1877F2] px-2 py-1 rounded-full">{item.period}</span>
-                                </div>
+                                <div className="flex items-center justify-between mb-1"><h4 className="font-bold text-lg text-zinc-800 leading-tight">{item.role}</h4><span className="text-[10px] font-bold bg-[#E7F3FF] text-[#1877F2] px-2 py-1 rounded-full">{item.period}</span></div>
                                 <p className="text-sm font-semibold text-[#1877F2] mb-2">@{item.company}</p>
                                 <p className="text-sm text-zinc-600 leading-relaxed">{item.desc}</p>
                             </div>
@@ -1697,83 +1415,33 @@ const FacebookLayout = ({ data, sectionType, onLike, isLiked, likeCount, user, t
                         ))}
                     </div>
                  )}
-
                  {sectionType === 'tags' && <SkillMarquee tags={data.tags} theme="facebook" t={t} />}
                  {sectionType === 'vibe' && <VibeCheck lang={t('lang')} />}
                  {sectionType === 'projects' && (
-                   <>
-                     <h3 className="text-xl font-black text-black mb-4 flex items-center gap-2">{t('projectHub')}</h3>
-                     <ProjectHub projects={data.items} theme="facebook" t={t} />
-                   </>
+                   <ProjectGallery projects={data.items} theme="facebook" onProjectClick={onProjectClick} t={t} />
                  )}
                  {sectionType === 'testimonials' && <TestimonialsHub items={data.items} theme="facebook" t={t} />}
-                 
                  {(sectionType === 'education' || sectionType === 'cards') && (
-                    <div className="grid gap-3">
+                    <div className="grid gap-3 py-4">
                         {data.items?.map((item, i) => (
                         <motion.div key={i} whileHover={{ y: -2 }} className="bg-white p-0 rounded-xl shadow-sm border border-zinc-200 overflow-hidden group">
-                            <div className="h-16 bg-gradient-to-r from-blue-600 to-cyan-500 relative">
-                                <div className="absolute -bottom-6 left-4 w-12 h-12 bg-white rounded-full p-1 border-2 border-white">
-                                    <div className="w-full h-full bg-zinc-100 rounded-full flex items-center justify-center">
-                                        <GraduationCap size={20} className="text-blue-600" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="pt-8 pb-4 px-4">
-                                <h4 className="font-bold text-zinc-900">{item.school}</h4>
-                                <p className="text-sm text-zinc-500 mb-2">{item.degree}</p>
-                                <div className="flex items-center gap-2 text-xs font-medium text-zinc-400">
-                                    <Clock size={12} />
-                                    <span>{item.year}</span>
-                                </div>
-                            </div>
+                            <div className="h-16 bg-gradient-to-r from-blue-600 to-cyan-500 relative"><div className="absolute -bottom-6 left-4 w-12 h-12 bg-white rounded-full p-1 border-2 border-white"><div className="w-full h-full bg-zinc-100 rounded-full flex items-center justify-center"><GraduationCap size={20} className="text-blue-600" /></div></div></div>
+                            <div className="pt-8 pb-4 px-4"><h4 className="font-bold text-zinc-900">{item.school}</h4><p className="text-sm text-zinc-500 mb-2">{item.degree}</p><div className="flex items-center gap-2 text-xs font-medium text-zinc-400"><Clock size={12} /><span>{item.year}</span></div></div>
                         </motion.div>
                         ))}
                     </div>
                  )}
-
                  {sectionType === 'contact' && (
-                    <div className="bg-white rounded-xl shadow-sm border border-zinc-200 overflow-hidden">
-                        <div className="p-4 border-b border-zinc-100 flex justify-between items-center">
-                            <h3 className="font-bold text-lg text-zinc-900">{t('connect')}</h3>
-                            <span className="text-xs font-bold text-[#1877F2] bg-[#E7F3FF] px-2 py-1 rounded-full">{t('openForWork')}</span>
-                        </div>
-                        
+                    <div className="bg-white rounded-xl shadow-sm border border-zinc-200 overflow-hidden my-4">
+                        <div className="p-4 border-b border-zinc-100 flex justify-between items-center"><h3 className="font-bold text-lg text-zinc-900">{t('connect')}</h3><span className="text-xs font-bold text-[#1877F2] bg-[#E7F3FF] px-2 py-1 rounded-full">{t('openForWork')}</span></div>
                         <div className="p-4 grid grid-cols-2 gap-3">
-                            {data.links?.map((l, i) => (
-                                <a key={i} href={l.href} target="_blank" className="bg-zinc-50 border border-zinc-200 rounded-lg p-3 flex flex-col items-center text-center hover:shadow-md transition-shadow group">
-                                    <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center border border-zinc-200 mb-2 group-hover:scale-110 transition-transform">
-                                        <l.icon size={24} className="text-[#1877F2]" />
-                                    </div>
-                                    <span className="font-bold text-sm text-zinc-800">{l.label}</span>
-                                    <span className="text-xs text-zinc-500 mb-3 truncate w-full">{l.val}</span>
-                                    <button className="w-full bg-[#E7F3FF] text-[#1877F2] font-bold text-xs py-2 rounded-md hover:bg-[#dbeafe] transition-colors">
-                                        {t('connect')}
-                                    </button>
-                                </a>
-                            ))}
+                            {data.links?.map((l, i) => (<a key={i} href={l.href} target="_blank" className="bg-zinc-50 border border-zinc-200 rounded-lg p-3 flex flex-col items-center text-center hover:shadow-md transition-shadow group"><div className="w-12 h-12 bg-white rounded-full flex items-center justify-center border border-zinc-200 mb-2 group-hover:scale-110 transition-transform"><l.icon size={24} className="text-[#1877F2]" /></div><span className="font-bold text-sm text-zinc-800">{l.label}</span><span className="text-xs text-zinc-500 mb-3 truncate w-full">{l.val}</span><button className="w-full bg-[#E7F3FF] text-[#1877F2] font-bold text-xs py-2 rounded-md hover:bg-[#dbeafe] transition-colors">{t('connect')}</button></a>))}
                         </div>
-
-                        <div className="p-4 border-t border-zinc-100">
-                            <div className="flex gap-3">
-                                <UserAvatar className="w-10 h-10" />
-                                <div className="flex-1 bg-zinc-100 rounded-2xl px-4 py-2 hover:bg-zinc-200 transition-colors cursor-text">
-                                    <ContactForm theme="facebook" user={user} placeholder={t('writeMessage')} t={t} />
-                                </div>
-                            </div>
-                        </div>
+                        <div className="p-4 border-t border-zinc-100"><div className="flex gap-3"><UserAvatar className="w-10 h-10" /><div className="flex-1 bg-zinc-100 rounded-2xl px-4 py-2 hover:bg-zinc-200 transition-colors cursor-text"><ContactForm theme="facebook" t={t} /></div></div></div>
                     </div>
                  )}
               </div>
-              
-              <div className="px-4 py-2 flex justify-between border-b border-zinc-100">
-                  <div className="flex items-center gap-1">
-                     <div className="w-5 h-5 bg-[#1877F2] rounded-full flex items-center justify-center"><ThumbsUp size={12} className="text-white" /></div>
-                     <span className="text-xs text-zinc-500">{42 + likeCount}</span>
-                  </div>
-                  <span className="text-xs text-zinc-500">3 {t('comments')}</span>
-              </div>
-
+              <div className="px-4 py-2 flex justify-between border-b border-zinc-100"><div className="flex items-center gap-1"><div className="w-5 h-5 bg-[#1877F2] rounded-full flex items-center justify-center"><ThumbsUp size={12} className="text-white" /></div><span className="text-xs text-zinc-500">{42 + likeCount}</span></div><span className="text-xs text-zinc-500">3 {t('comments')}</span></div>
               <div className="px-2 py-1 flex">
                   <motion.button whileTap={{ scale: 1.1 }} onClick={() => onLike('facebook')} className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg font-medium text-sm transition-colors ${isLiked ? "text-blue-600 font-bold" : "text-zinc-600 hover:bg-zinc-50"}`}><ThumbsUp size={18} fill={isLiked ? "currentColor" : "none"} /> {t('likes')}</motion.button>
                   <button className="flex-1 flex items-center justify-center gap-2 py-2 hover:bg-zinc-50 rounded-lg text-zinc-600 font-medium text-sm"><MessageSquare size={18} /> {t('comments')}</button>
@@ -1784,18 +1452,14 @@ const FacebookLayout = ({ data, sectionType, onLike, isLiked, likeCount, user, t
   </div>
 );
 
-const TwitterLayout = ({ data, sectionType, onLike, isLiked, likeCount, user, t }) => (
+const TwitterLayout = ({ data, sectionType, onLike, isLiked, likeCount, onProjectClick, t }) => (
   <div className="w-full bg-black text-[#e7e9ea] flex justify-center pb-20">
      <div className="w-full max-w-xl border-x border-zinc-800">
         {sectionType === 'intro' ? (
            <div className="pb-4 border-b border-zinc-800 pt-4">
-              <div className="h-32 bg-zinc-800 relative">
-                  <img src={PROFILE.cover} alt="Cover" className="w-full h-full object-cover opacity-80" />
-              </div>
+              <div className="h-32 bg-zinc-800 relative"><img src={PROFILE.cover} alt="Cover" className="w-full h-full object-cover opacity-80" /></div>
               <div className="px-4 relative mb-4">
-                 <div className="w-24 h-24 md:w-32 md:h-32 rounded-full border-4 border-black bg-zinc-900 absolute -top-12 md:-top-16 overflow-hidden flex items-center justify-center">
-                    <img src={PROFILE.avatar} alt="Profile" className="w-full h-full object-cover" />
-                 </div>
+                 <div className="w-24 h-24 md:w-32 md:h-32 rounded-full border-4 border-black bg-zinc-900 absolute -top-12 md:-top-16 overflow-hidden flex items-center justify-center"><img src={PROFILE.avatar} alt="Profile" className="w-full h-full object-cover" /></div>
                  <div className="flex justify-end pt-3"><button className="bg-white text-black font-bold px-4 py-1.5 rounded-full text-sm hover:bg-zinc-200">{t('editProfile')}</button></div>
                  <div className="mt-4"><h1 className="font-bold text-xl leading-tight text-white">{data.content.name}</h1><p className="text-zinc-500 text-sm">{data.content.handle}</p></div>
                  <p className="mt-3 text-sm text-white">{data.content.summary}</p>
@@ -1809,33 +1473,35 @@ const TwitterLayout = ({ data, sectionType, onLike, isLiked, likeCount, user, t 
               <div className="flex gap-3">
                  <UserAvatar className="w-10 h-10 flex-shrink-0" />
                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center justify-between"><div className="flex items-center gap-1"><span className="font-bold text-white hover:underline">Warda Naeem</span><span className="text-zinc-500">@warda.dev</span><span className="text-zinc-500">·</span><span className="text-zinc-500">2h</span></div><MoreHorizontal size={16} className="text-zinc-500" /></div>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-1">
+                        <span className="font-bold text-white hover:underline">Warda Naeem</span>
+                        <span className="text-zinc-500">@warda.dev</span>
+                        <span className="text-zinc-500">·</span>
+                        <span className="text-zinc-500">Just now</span>
+                      </div>
+                      <MoreHorizontal size={16} className="text-zinc-500" />
+                    </div>
+
                     <div className="mt-1 text-[15px] leading-normal text-white">
+                       {sectionType === 'projects' && (
+                         <div className="mt-3">
+                           <p className="mb-3">Thread of my work: 🧵👇 <span className="text-[#1d9bf0]">#ProjectHub #React #UI</span></p>
+                           <ProjectGallery projects={data.items} theme="twitter" onProjectClick={onProjectClick} t={t} />
+                         </div>
+                       )}
+
                        {sectionType === 'timeline' && (
                           <div className="relative">
                             <div className="absolute left-[26px] top-4 bottom-0 w-0.5 bg-zinc-800"></div>
-                            
                             <div className="space-y-0">
                                <div className="pl-16 pb-4 text-zinc-500 text-sm">{t('threadWork')}</div>
                                {data.items?.map((item, i) => (
                                   <motion.div key={i} initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: i * 0.1 }} className="flex gap-3 relative pb-6 group">
-                                     <div className="flex flex-col items-center z-10 bg-black pt-1">
-                                        <UserAvatar className="w-12 h-12 border-2 border-black" />
-                                     </div>
-                                     
+                                     <div className="flex flex-col items-center z-10 bg-black pt-1"><UserAvatar className="w-12 h-12 border-2 border-black" /></div>
                                      <div className="flex-1 pt-1 pr-2">
-                                        <div className="flex items-baseline gap-1">
-                                           <span className="font-bold text-white hover:underline cursor-pointer">Warda Naeem</span>
-                                           <span className="text-zinc-500 text-[15px]">@warda.dev</span>
-                                           <span className="text-zinc-500 text-[15px]">·</span>
-                                           <span className="text-zinc-500 text-[15px]">{item.period.split(' ')[0]}</span>
-                                        </div>
-                                        
-                                        <div className="mt-0.5 text-[15px] text-white/90">
-                                           <span className="text-[#1d9bf0] font-bold block mb-1">🚀 {item.role}</span>
-                                           At <span className="font-bold text-white">@{item.company}</span> — {item.desc}
-                                        </div>
-                                        
+                                        <div className="flex items-baseline gap-1"><span className="font-bold text-white hover:underline cursor-pointer">Warda Naeem</span><span className="text-zinc-500 text-[15px]">@warda.dev</span><span className="text-zinc-500 text-[15px]">·</span><span className="text-zinc-500 text-[15px]">{item.period.split(' ')[0]}</span></div>
+                                        <div className="mt-0.5 text-[15px] text-white/90"><span className="text-[#1d9bf0] font-bold block mb-1">🚀 {item.role}</span>At <span className="font-bold text-white">@{item.company}</span> — {item.desc}</div>
                                         <div className="flex justify-between mt-3 max-w-sm text-zinc-500">
                                            <div className="group flex items-center gap-1 hover:text-[#1d9bf0] cursor-pointer"><MessageSquare size={16} /><span className="text-xs opacity-0 group-hover:opacity-100 transition-opacity">{t('reply')}</span></div>
                                            <div className="group flex items-center gap-1 hover:text-green-500 cursor-pointer"><Repeat size={16} /><span className="text-xs opacity-0 group-hover:opacity-100 transition-opacity">Repost</span></div>
@@ -1848,69 +1514,21 @@ const TwitterLayout = ({ data, sectionType, onLike, isLiked, likeCount, user, t 
                             </div>
                           </div>
                        )}
-
                        {sectionType === 'tags' && <SkillMarquee tags={data.tags} theme="twitter" t={t} />}
                        {sectionType === 'vibe' && <VibeCheck lang={t('lang')} />}
-                       {sectionType === 'projects' && (
-                         <>
-                             <h3 className="text-xl font-black text-white mb-4 flex items-center gap-2">{t('projectHub')}</h3>
-                             <ProjectHub projects={data.items} theme="twitter" t={t} />
-                         </>
-                       )}
                        {sectionType === 'testimonials' && <TestimonialsHub items={data.items} theme="twitter" t={t} />}
-                       
                        {(sectionType === 'education' || sectionType === 'cards') && (
                           <div className="grid gap-px bg-zinc-800 border border-zinc-800 rounded-xl overflow-hidden mt-2">
                              {data.items?.map((item, i) => (
-                                <div key={i} className="bg-black p-4 hover:bg-zinc-900/30 transition-colors flex items-center gap-4">
-                                   <div className="w-12 h-12 bg-zinc-800 rounded-lg flex items-center justify-center text-2xl">
-                                     🎓
-                                   </div>
-                                   <div>
-                                      <div className="flex items-center gap-2">
-                                         <p className="font-bold text-white">{item.school}</p>
-                                         <Award size={14} className="text-[#1d9bf0] fill-[#1d9bf0] text-black" />
-                                      </div>
-                                      <p className="text-[15px] text-zinc-400">{item.degree}</p>
-                                      <p className="text-xs text-zinc-600 mt-1">{item.year}</p>
-                                   </div>
-                                </div>
+                                <div key={i} className="bg-black p-4 hover:bg-zinc-900/30 transition-colors flex items-center gap-4"><div className="w-12 h-12 bg-zinc-800 rounded-lg flex items-center justify-center text-2xl">🎓</div><div><div className="flex items-center gap-2"><p className="font-bold text-white">{item.school}</p><Award size={14} className="text-[#1d9bf0] fill-[#1d9bf0] text-black" /></div><p className="text-[15px] text-zinc-400">{item.degree}</p><p className="text-xs text-zinc-600 mt-1">{item.year}</p></div></div>
                              ))}
                           </div>
                        )}
-
                        {sectionType === 'contact' && (
                           <div className="mt-2">
-                             <div className="bg-black border border-zinc-800 rounded-2xl overflow-hidden mb-6">
-                                <div className="p-3 border-b border-zinc-800 flex items-center justify-between bg-zinc-900/50">
-                                   <span className="font-bold text-white">{t('newMessage')}</span>
-                                   <Mail size={18} className="text-[#1d9bf0]" />
-                                </div>
-                                <div className="p-4">
-                                   <ContactForm theme="twitter" user={user} t={t} />
-                                </div>
-                             </div>
-
-                             <div className="bg-zinc-900/30 rounded-2xl border border-zinc-800 overflow-hidden">
-                                <div className="p-4 border-b border-zinc-800">
-                                   <h3 className="font-black text-lg text-white">{t('findElsewhere')}</h3>
-                                </div>
-                                {data.links?.map((l, i) => (
-                                   <a key={i} href={l.href} target="_blank" className="flex items-center justify-between p-4 hover:bg-zinc-800 transition-colors border-b border-zinc-800 last:border-0 group">
-                                      <div className="flex items-center gap-3">
-                                         <div className="w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center border border-zinc-700 group-hover:border-[#1d9bf0] transition-colors">
-                                            <l.icon size={18} className="text-white group-hover:text-[#1d9bf0]" />
-                                         </div>
-                                         <div className="flex flex-col">
-                                            <span className="font-bold text-white text-sm group-hover:underline">{l.label}</span>
-                                            <span className="text-zinc-500 text-xs">@{l.val.split('/')[0]}</span>
-                                         </div>
-                                      </div>
-                                      <button className="bg-white text-black text-xs font-bold px-4 py-1.5 rounded-full hover:bg-zinc-200 transition-colors">
-                                          {t('follow')}
-                                      </button>
-                                   </a>
-                                ))}
+                             <div className="bg-black border border-zinc-800 rounded-2xl overflow-hidden mb-6"><div className="p-3 border-b border-zinc-800 flex items-center justify-between bg-zinc-900/50"><span className="font-bold text-white">{t('newMessage')}</span><Mail size={18} className="text-[#1d9bf0]" /></div><div className="p-4"><ContactForm theme="twitter" t={t} /></div></div>
+                             <div className="bg-zinc-900/30 rounded-2xl border border-zinc-800 overflow-hidden"><div className="p-4 border-b border-zinc-800"><h3 className="font-black text-lg text-white">{t('findElsewhere')}</h3></div>
+                                {data.links?.map((l, i) => (<a key={i} href={l.href} target="_blank" className="flex items-center justify-between p-4 hover:bg-zinc-800 transition-colors border-b border-zinc-800 last:border-0 group"><div className="flex items-center gap-3"><div className="w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center border border-zinc-700 group-hover:border-[#1d9bf0] transition-colors"><l.icon size={18} className="text-white group-hover:text-[#1d9bf0]" /></div><div className="flex flex-col"><span className="font-bold text-white text-sm group-hover:underline">{l.label}</span><span className="text-zinc-500 text-xs">@{l.val.split('/')[0]}</span></div></div><button className="bg-white text-black text-xs font-bold px-4 py-1.5 rounded-full hover:bg-zinc-200 transition-colors">{t('follow')}</button></a>))}
                              </div>
                           </div>
                        )}
@@ -2001,14 +1619,19 @@ export default function App() {
     playSound('click');
     setStickers([]);
   };
+
+  const openProject = (url) => {
+    playSound('click');
+    window.open(url, '_blank', 'noopener,noreferrer');
+  };
     
   const renderSection = (section) => {
     if (devMode) return null;
-    const props = { data: section, sectionType: section.type, user: user, t };
+    const props = { data: section, sectionType: section.type, user: user, t, onProjectClick: openProject };
     let content;
     switch (activeTheme) {
       case 'tiktok': content = <TikTokLayout {...props} onLike={handleLike} likeCount={likes.tiktok.count} isLiked={likes.tiktok.active} />; break;
-      case 'instagram': content = <InstagramLayout {...props} onStoryClick={() => setShowStory(true)} onLike={handleLike} isLiked={likes.instagram.active} likeCount={likes.instagram.count} />; break;
+      case 'instagram': content = <InstagramLayout {...props} onStoryClick={() => setShowStory(true)} isLiked={likes.instagram.active} likeCount={likes.instagram.count} />; break;
       case 'facebook': content = <FacebookLayout {...props} onLike={handleLike} isLiked={likes.facebook.active} likeCount={likes.facebook.count} />; break;
       case 'twitter': content = <TwitterLayout {...props} onLike={handleLike} isLiked={likes.twitter.active} likeCount={likes.twitter.count} />; break;
       default: content = <TikTokLayout {...props} />;
