@@ -15,7 +15,7 @@ import {
   Code2, Briefcase, GraduationCap, User, Mail, GripVertical, Palette, X, Check, MapPin,
   Heart, MessageCircle, Share2, Bookmark, Repeat, MoreHorizontal, Search, Home, Bell, Music2, Instagram, Facebook, Twitter, ThumbsUp, MessageSquare,
   Terminal, Award, Coffee, Plane, Play, Pause, Disc, Sticker, Zap, Smile, Rocket, Send, Users, Video, Store, Hash, List, Compass, Clock, ExternalLink, Github, Linkedin, Loader2, PenTool, Trash2, Eraser, RefreshCw, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Gamepad2, Headphones, Camera, StickyNote,
-  // New "Funny Coding" Icons
+  // Funny Coding Icons
   Bug, Flame, Skull, Laptop, AlertTriangle, MonitorPlay,
   // Project Icons
   CreditCard, Brain, Bot, Link, Image, Mic, Film, CheckSquare, Layers, BarChart2, Star, Quote,
@@ -24,7 +24,7 @@ import {
   // Tab Icons
   Grid, FileText, Tag, TrendingUp,
   Eye, GitCommit, GitBranch, Sparkles,
-  Languages // Added Language Icon
+  Languages 
 } from 'lucide-react';
 
 // --- 1. UTILITIES & DATA ---
@@ -131,7 +131,7 @@ const UI_TRANSLATIONS = {
     connect: "Connect",
     openForWork: "Open for Work",
     projectHub: "Project Hub",
-    projectHubTitle: "Project Hub", // Updated: Removed "3D"
+    projectHubTitle: "Project Hub", 
     tapCenter: "TAP CENTER",
     trendingSkills: "Trending Skills",
     liveBadge: "LIVE",
@@ -210,6 +210,10 @@ const UI_TRANSLATIONS = {
     pLofi: "Lofi Study Room",
     pWatch: "What to Watch",
     pTask: "TaskDrops",
+    pLanguage: "Language App",
+    pShoes: "Shoes Shop",
+    pTea: "Spill the Tea",
+    pReal: "Real Estate",
   },
   de: {
     theme: "THEMA",
@@ -244,7 +248,7 @@ const UI_TRANSLATIONS = {
     connect: "Vernetzen",
     openForWork: "Offen für Jobs",
     projectHub: "Projekt-Hub",
-    projectHubTitle: "Projekt-Hub", // Updated: Removed "3D"
+    projectHubTitle: "Projekt-Hub", 
     tapCenter: "MITTE TIPPEN",
     trendingSkills: "Angesagte Skills",
     liveBadge: "LIVE",
@@ -291,7 +295,7 @@ const UI_TRANSLATIONS = {
     saved: "Gespeichert",
     groups: "Gruppen",
     video: "Video",
-    marketplace: "Marktplatz",
+    marketplace: "Marketplace",
     feeds: "Feeds",
     githubProfile: "GitHub Profil",
     linkedinConnection: "LinkedIn Verbindung",
@@ -323,6 +327,10 @@ const UI_TRANSLATIONS = {
     pLofi: "Lofi Lernraum",
     pWatch: "Was schauen?",
     pTask: "TaskDrops",
+    pLanguage: "Sprach-App",
+    pShoes: "Schuh-Shop",
+    pTea: "Spill the Tea",
+    pReal: "Immobilien",
   }
 };
 
@@ -356,7 +364,11 @@ const GET_SECTIONS = (t) => [
     { title: t('pInsta'), genre: 'Social • UI/UX', color: 'from-pink-500 to-rose-700', viewers: t('viral'), link: 'https://wardasanam.github.io/instagram-clone/', icon: Image },
     { title: t('pLofi'), genre: t('lang') === 'de' ? 'Audio • Vibe' : 'Audio • Vibe', color: 'from-cyan-500 to-blue-700', viewers: t('chill'), link: 'https://wardasanam.github.io/LOFI-STUDY-ROOM/', icon: Headphones },
     { title: t('pWatch'), genre: t('lang') === 'de' ? 'API • Filme' : 'API • Movies', color: 'from-yellow-400 to-orange-600', viewers: t('popular'), link: 'https://wardasanam.github.io/what-to-watch/', icon: Film },
-    { title: t('pTask'), genre: t('lang') === 'de' ? 'Produktivität • Tools' : 'Productivity • Tools', color: 'from-teal-400 to-emerald-700', viewers: t('productivity'), link: 'https://wardasanam.github.io/TaskDrops/', icon: CheckSquare }
+    { title: t('pTask'), genre: t('lang') === 'de' ? 'Produktivität • Tools' : 'Productivity • Tools', color: 'from-teal-400 to-emerald-700', viewers: t('productivity'), link: 'https://wardasanam.github.io/TaskDrops/', icon: CheckSquare },
+    { title: t('pLanguage'), genre: 'React • Education', color: 'from-amber-400 to-orange-600', viewers: t('viral'), link: 'https://wardasanam.github.io/language-app/', icon: Languages },
+    { title: t('pShoes'), genre: 'React • Shop', color: 'from-zinc-500 to-zinc-900', viewers: t('trending'), link: 'https://wardasanam.github.io/shoes-shop/', icon: Store },
+    { title: t('pTea'), genre: 'React • Community', color: 'from-lime-500 to-green-700', viewers: t('chill'), link: 'https://wardasanam.github.io/spill-the-tea/', icon: Coffee },
+    { title: t('pReal'), genre: 'React • Estate', color: 'from-blue-600 to-slate-900', viewers: t('top10'), link: 'https://wardasanam.github.io/real-state/', icon: Home },
   ]},
   { id: 'skills', type: 'tags', title: 'Tech Stack', tags: [
     "JavaScript (ES6+)", "TypeScript", "React.js", "Next.js", 
@@ -538,8 +550,8 @@ const ProjectHub = ({ projects, theme, t }) => {
   };
 
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-  const radius = isMobile ? 110 : 140; 
-  const containerSize = isActive ? 'h-[420px]' : 'h-[200px]';
+  const radius = isMobile ? 110 : 155; 
+  const containerSize = isActive ? 'h-[460px]' : 'h-[200px]';
 
   return (
     <div className={`w-full relative flex flex-col items-center justify-center overflow-hidden transition-all duration-700 ease-[cubic-bezier(0.25,0.8,0.25,1)] ${containerSize} bg-transparent perspective-[1000px]`}>
@@ -564,7 +576,6 @@ const ProjectHub = ({ projects, theme, t }) => {
                        filter: 'blur(40px)',
                        }}
                    />
-                   {/* 3D Grid Floor */}
                    <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px] [transform:perspective(500px)_rotateX(60deg)] opacity-30 origin-bottom"></div>
                  </>
              ) : (
@@ -652,14 +663,11 @@ const ProjectHub = ({ projects, theme, t }) => {
                    className="block w-full h-full relative group perspective-[500px]"
                    whileHover={{ scale: 1.15, zIndex: 100 }}
                 >
-                   {/* 3D Sphere/Block Container */}
                    <div className={`w-full h-full rounded-2xl bg-gradient-to-b ${p.color} relative shadow-[0_10px_20px_rgba(0,0,0,0.4),_inset_0_4px_8px_rgba(255,255,255,0.4),_inset_0_-4px_8px_rgba(0,0,0,0.2)] border border-white/20 overflow-hidden transform transition-transform duration-300 group-hover:-translate-y-2`}>
                       
-                      {/* Glass Highlights */}
                       <div className="absolute top-0 left-1/4 right-1/4 h-1/2 bg-gradient-to-b from-white/60 to-transparent rounded-full blur-[6px]"></div>
                       <div className="absolute bottom-2 left-1/4 right-1/4 h-1/4 bg-gradient-to-t from-white/20 to-transparent rounded-full blur-[4px]"></div>
 
-                      {/* Icon Container - 3D Stack Effect */}
                       <motion.div 
                         className="absolute inset-0 flex items-center justify-center transition-opacity duration-300 group-hover:opacity-0"
                         animate={{ y: [0, -4, 0] }}
@@ -667,15 +675,12 @@ const ProjectHub = ({ projects, theme, t }) => {
                       >
                          {p.icon && (
                             <div className="relative w-8 h-8 flex items-center justify-center">
-                                {/* Deep Shadow */}
                                 <p.icon size={32} className="absolute top-[2px] left-[2px] text-black/40 blur-[1px] transform scale-95" />
-                                {/* Main Icon with Emboss */}
                                 <p.icon size={32} className="relative z-10 text-white drop-shadow-[0_2px_2px_rgba(0,0,0,0.5)] filter contrast-125" strokeWidth={2.5} />
                             </div>
                          )}
                       </motion.div>
 
-                      {/* Title Overlay (Replaces Icon on Hover) */}
                       <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 p-1">
                           <span className="text-white text-[10px] font-black uppercase text-center leading-tight drop-shadow-md break-words w-full">
                               {p.title}
@@ -950,7 +955,7 @@ const MatrixRain = () => {
       }
     };
     const interval = setInterval(draw, 33);
-    return () => clearInterval(interval);
+    return () => clearInterval(draw);
   }, []);
   return <canvas ref={canvasRef} className="fixed inset-0 z-0 bg-black pointer-events-none" />;
 };
@@ -1146,7 +1151,7 @@ const TikTokDesktopSidebar = ({ type, data, t }) => (
 
 const CreativeSidebarLeft = ({ sectionType }) => {
   return (
-    <div className="hidden lg:flex flex-col w-64 h-[600px] justify-between gap-6 relative pr-4"> {/* Changed xl->lg, w-72->w-64, pr-8->pr-4 */}
+    <div className="hidden lg:flex flex-col w-64 h-[600px] justify-between gap-6 relative pr-4"> 
         {/* Holographic Card */}
         <div className="flex-1 bg-black/40 backdrop-blur-xl border border-pink-500/30 rounded-3xl p-6 relative overflow-hidden group shadow-[0_0_30px_rgba(236,72,153,0.1)]">
             <div className="absolute inset-0 bg-gradient-to-b from-pink-500/5 to-purple-600/5 pointer-events-none" />
@@ -1158,7 +1163,6 @@ const CreativeSidebarLeft = ({ sectionType }) => {
             </h3>
             
             <div className="font-mono text-[10px] text-green-400 opacity-80 leading-relaxed">
-                {/* Typing effect simulation */}
                 <p>{`> init_portfolio()`}</p>
                 <p className="text-blue-400">{`> loading modules...`}</p>
                 <p>{`> [SUCCESS] react_core`}</p>
@@ -1206,7 +1210,7 @@ const CreativeSidebarLeft = ({ sectionType }) => {
 
 const CreativeSidebarRight = () => {
     return (
-        <div className="hidden lg:flex flex-col w-64 h-[600px] justify-start gap-6 relative pl-4"> {/* Changed xl->lg, w-72->w-64, pl-8->pl-4 */}
+        <div className="hidden lg:flex flex-col w-64 h-[600px] justify-start gap-6 relative pl-4"> 
             {/* Music Player Widget */}
             <div className="h-48 bg-black/40 backdrop-blur-xl border border-cyan-500/30 rounded-3xl p-4 flex flex-col items-center justify-center relative overflow-hidden shadow-[0_0_30px_rgba(6,182,212,0.1)]">
                 <div className="w-24 h-24 rounded-full border-4 border-zinc-800 bg-zinc-900 flex items-center justify-center relative animate-spin-slow shadow-xl">
@@ -1221,10 +1225,10 @@ const CreativeSidebarRight = () => {
                 <div className="absolute bottom-0 left-0 right-0 h-8 flex items-end justify-center gap-1 opacity-50">
                     {[...Array(10)].map((_, i) => (
                         <motion.div 
-                            key={i}
-                            animate={{ height: [5, 20, 10, 25, 5] }}
-                            transition={{ duration: 0.5, repeat: Infinity, delay: i * 0.1 }}
-                            className="w-1 bg-cyan-500 rounded-t-full"
+                            key={i} 
+                            animate={{ height: [5, 20, 10, 25, 5] }} 
+                            transition={{ duration: 0.5, repeat: Infinity, delay: i * 0.1 }} 
+                            className="w-1 bg-cyan-500 rounded-t-full" 
                         />
                     ))}
                 </div>
@@ -1297,14 +1301,11 @@ const TikTokLayout = ({ data, sectionType, onLike, likeCount, isLiked, user, t }
       {/* Content Area */}
       <div className="relative w-full h-full flex items-center justify-center pt-20 pb-20">
          {activeTab === 'live' ? (
-            // LIVE VIEW (Formerly Sidebar)
             <div className="w-full h-full flex flex-col items-center justify-center">
                <TikTokDesktopSidebar type={sectionType} data={data} t={t} />
             </div>
          ) : (
-            // FOR YOU VIEW (Main Content)
             <div className="w-full h-full flex flex-row items-center justify-center relative px-4">
-               {/* Left "Code" Sidebar (Desktop) */}
                <CreativeSidebarLeft sectionType={sectionType} />
 
                {/* Main Scrollable Content */}
@@ -1351,7 +1352,6 @@ const TikTokLayout = ({ data, sectionType, onLike, likeCount, isLiked, user, t }
                             </div>
                           )}
                           
-                          {/* Updated Experience Section */}
                           {sectionType === 'timeline' && (
                             <div className="space-y-4 relative pl-4 border-l border-white/20">
                                {data.items?.map((item, i) => (
@@ -1375,7 +1375,6 @@ const TikTokLayout = ({ data, sectionType, onLike, likeCount, isLiked, user, t }
                           {sectionType === 'projects' && <ProjectHub projects={data.items} theme="tiktok" t={t} />}
                           {sectionType === 'testimonials' && <TestimonialsHub items={data.items} theme="tiktok" t={t} />}
                           
-                          {/* Improved Education Section */}
                           {(sectionType === 'education' || sectionType === 'cards') && (
                             <div className="space-y-6 pl-2 relative">
                                <div className="absolute left-[11px] top-2 bottom-2 w-0.5 bg-gradient-to-b from-pink-500 to-purple-600/20"></div>
@@ -1423,9 +1422,8 @@ const TikTokLayout = ({ data, sectionType, onLike, likeCount, isLiked, user, t }
 };
 
 const InstagramLayout = ({ data, sectionType, onStoryClick, onLike, isLiked, likeCount, user, t }) => {
-  const [activeTab, setActiveTab] = useState('grid'); // 'grid' | 'list' | 'tagged' | 'contact'
+  const [activeTab, setActiveTab] = useState('grid'); 
 
-  // Only show the full layout if it's the "Intro" section, otherwise we render specific content based on tabs
   if (sectionType !== 'intro') return null;
 
   return (
@@ -1679,7 +1677,6 @@ const FacebookLayout = ({ data, sectionType, onLike, isLiked, likeCount, user, t
           <div className="bg-white rounded-xl shadow-sm mx-4 md:mx-0 mb-2">
               <div className="p-4 flex items-center justify-between"><div className="flex items-center gap-2"><UserAvatar className="w-10 h-10" /><div><p className="font-bold text-sm text-black">Warda Naeem</p><div className="flex items-center gap-1 text-xs text-zinc-500"><span>Just now</span><span>•</span><span className="font-bold">🌍</span></div></div></div><MoreHorizontal size={20} className="text-zinc-500" /></div>
               <div className="bg-zinc-50 border-y border-zinc-100 p-6 text-black">
-                 {/* UPDATED FACEBOOK TIMELINE */}
                  {sectionType === 'timeline' && (
                     <div className="relative pl-4 space-y-6">
                         <div className="absolute left-[21px] top-2 bottom-2 w-0.5 bg-gray-200"></div>
@@ -1711,7 +1708,6 @@ const FacebookLayout = ({ data, sectionType, onLike, isLiked, likeCount, user, t
                  )}
                  {sectionType === 'testimonials' && <TestimonialsHub items={data.items} theme="facebook" t={t} />}
                  
-                 {/* UPDATED FACEBOOK EDUCATION */}
                  {(sectionType === 'education' || sectionType === 'cards') && (
                     <div className="grid gap-3">
                         {data.items?.map((item, i) => (
@@ -1736,7 +1732,6 @@ const FacebookLayout = ({ data, sectionType, onLike, isLiked, likeCount, user, t
                     </div>
                  )}
 
-                 {/* UPDATED FACEBOOK CONTACT */}
                  {sectionType === 'contact' && (
                     <div className="bg-white rounded-xl shadow-sm border border-zinc-200 overflow-hidden">
                         <div className="p-4 border-b border-zinc-100 flex justify-between items-center">
@@ -1816,7 +1811,6 @@ const TwitterLayout = ({ data, sectionType, onLike, isLiked, likeCount, user, t 
                  <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between"><div className="flex items-center gap-1"><span className="font-bold text-white hover:underline">Warda Naeem</span><span className="text-zinc-500">@warda.dev</span><span className="text-zinc-500">·</span><span className="text-zinc-500">2h</span></div><MoreHorizontal size={16} className="text-zinc-500" /></div>
                     <div className="mt-1 text-[15px] leading-normal text-white">
-                       {/* UPDATED TWITTER EXPERIENCE */}
                        {sectionType === 'timeline' && (
                           <div className="relative">
                             <div className="absolute left-[26px] top-4 bottom-0 w-0.5 bg-zinc-800"></div>
@@ -1858,20 +1852,19 @@ const TwitterLayout = ({ data, sectionType, onLike, isLiked, likeCount, user, t 
                        {sectionType === 'tags' && <SkillMarquee tags={data.tags} theme="twitter" t={t} />}
                        {sectionType === 'vibe' && <VibeCheck lang={t('lang')} />}
                        {sectionType === 'projects' && (
-                          <>
+                         <>
                              <h3 className="text-xl font-black text-white mb-4 flex items-center gap-2">{t('projectHub')}</h3>
                              <ProjectHub projects={data.items} theme="twitter" t={t} />
-                          </>
+                         </>
                        )}
                        {sectionType === 'testimonials' && <TestimonialsHub items={data.items} theme="twitter" t={t} />}
                        
-                       {/* UPDATED TWITTER EDUCATION */}
                        {(sectionType === 'education' || sectionType === 'cards') && (
                           <div className="grid gap-px bg-zinc-800 border border-zinc-800 rounded-xl overflow-hidden mt-2">
                              {data.items?.map((item, i) => (
                                 <div key={i} className="bg-black p-4 hover:bg-zinc-900/30 transition-colors flex items-center gap-4">
                                    <div className="w-12 h-12 bg-zinc-800 rounded-lg flex items-center justify-center text-2xl">
-                                      🎓
+                                     🎓
                                    </div>
                                    <div>
                                       <div className="flex items-center gap-2">
@@ -1886,7 +1879,6 @@ const TwitterLayout = ({ data, sectionType, onLike, isLiked, likeCount, user, t 
                           </div>
                        )}
 
-                       {/* UPDATED TWITTER CONTACT */}
                        {sectionType === 'contact' && (
                           <div className="mt-2">
                              <div className="bg-black border border-zinc-800 rounded-2xl overflow-hidden mb-6">
@@ -1915,7 +1907,7 @@ const TwitterLayout = ({ data, sectionType, onLike, isLiked, likeCount, user, t 
                                          </div>
                                       </div>
                                       <button className="bg-white text-black text-xs font-bold px-4 py-1.5 rounded-full hover:bg-zinc-200 transition-colors">
-                                         {t('follow')}
+                                          {t('follow')}
                                       </button>
                                    </a>
                                 ))}
@@ -1935,17 +1927,13 @@ const TwitterLayout = ({ data, sectionType, onLike, isLiked, likeCount, user, t 
 // --- MAIN APP ---
 export default function App() {
   const [activeTheme, setActiveTheme] = useState('tiktok');
-  const [lang, setLang] = useState('en'); // 'en' or 'de'
+  const [lang, setLang] = useState('en'); 
   
-  // Define t first, so it can be used in initialization
   const t = (key) => {
       if (key === 'lang') return lang;
       return UI_TRANSLATIONS[lang]?.[key] || key;
   };
 
-  // Helper to get fresh sections with current language
-  // We need to pass a specific `t` function to GET_SECTIONS that respects the `lang` passed to it,
-  // or simply reconstruct it.
   const getSectionsForLang = (language) => {
       const localT = (key) => {
           if (key === 'lang') return language;
@@ -2016,7 +2004,6 @@ export default function App() {
     
   const renderSection = (section) => {
     if (devMode) return null;
-    // Pass the current `t` function to children
     const props = { data: section, sectionType: section.type, user: user, t };
     let content;
     switch (activeTheme) {
@@ -2042,7 +2029,6 @@ export default function App() {
       <div className="fixed top-4 left-4 z-[999] flex gap-2">
           {!devMode && <button onClick={() => { setShowThemeMenu(!showThemeMenu); playSound('click'); }} className="flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-pink-600 to-purple-600 text-white font-bold shadow-lg border border-white/20 hover:scale-105 active:scale-95 transition-all pointer-events-auto"><Palette size={16} /><span className="text-xs font-bold tracking-wide hidden md:block">{t('theme')}</span></button>}
           
-          {/* LANGUAGE TOGGLE BUTTON */}
           {!devMode && <button onClick={toggleLang} className="flex items-center gap-2 px-4 py-2 rounded-full bg-black/80 backdrop-blur-md border border-white/20 text-white font-bold hover:scale-105 active:scale-95 transition-all pointer-events-auto">
               <Languages size={16} />
               <span className="text-xs font-bold uppercase">{lang === 'en' ? 'EN' : 'DE'}</span>
