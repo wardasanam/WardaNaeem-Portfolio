@@ -44,7 +44,7 @@ const playSound = (type) => {
   osc.connect(gain);
   gain.connect(ctx.destination);
   const now = ctx.currentTime;
-    
+  
   if (type === 'pop') {
     osc.type = 'sine'; osc.frequency.setValueAtTime(800, now); osc.frequency.exponentialRampToValueAtTime(100, now + 0.1);
     gain.gain.setValueAtTime(0.1, now); gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
@@ -215,6 +215,8 @@ const UI_TRANSLATIONS = {
     pShoes: "Shoes Shop",
     pTea: "Spill the Tea",
     pReal: "Real Estate",
+    pWhatever: "Whatever",
+    pGym: "Gym App",
   },
   de: {
     theme: "THEMA",
@@ -332,6 +334,8 @@ const UI_TRANSLATIONS = {
     pShoes: "Schuh-Shop",
     pTea: "Spill the Tea",
     pReal: "Immobilien",
+    pWhatever: "Whatever",
+    pGym: "Gym App",
   }
 };
 
@@ -362,6 +366,8 @@ const GET_SECTIONS = (t) => [
     { title: t('pMemory'), genre: t('lang') === 'de' ? 'Interaktiv • Logik' : 'Interactive • Logic', color: 'from-orange-500 to-red-700', viewers: t('newSeason'), link: 'https://wardasanam.github.io/memory-game/', icon: Brain },
     { title: t('pChat'), genre: 'React • AI', color: 'from-blue-500 to-indigo-700', viewers: t('trending'), link: 'https://wardasanam.github.io/react-ai-chat-app/', icon: Bot },
     { title: t('pChain'), genre: 'Web3 • dApp', color: 'from-violet-500 to-purple-800', viewers: t('top10'), link: 'https://wardasanam.github.io/mystery-chain-app/', icon: Link },
+    { title: t('pWhatever'), genre: t('lang') === 'de' ? 'Interaktiv • Design' : 'Interactive • Design', color: 'from-orange-400 to-rose-500', viewers: t('viral'), link: 'https://wardasanam.github.io/whatever/', icon: Zap },
+    { title: t('pGym'), genre: t('lang') === 'de' ? 'Fitness • Gesundheit' : 'Fitness • Health', color: 'from-red-500 to-orange-600', viewers: t('match98'), link: 'https://wardasanam.github.io/gym-app/', icon: Flame },
     { title: t('pInsta'), genre: 'Social • UI/UX', color: 'from-pink-500 to-rose-700', viewers: t('viral'), link: 'https://wardasanam.github.io/instagram-clone/', icon: Image },
     { title: t('pLofi'), genre: t('lang') === 'de' ? 'Audio • Vibe' : 'Audio • Vibe', color: 'from-cyan-500 to-blue-700', viewers: t('chill'), link: 'https://wardasanam.github.io/LOFI-STUDY-ROOM/', icon: Headphones },
     { title: t('pWatch'), genre: t('lang') === 'de' ? 'API • Filme' : 'API • Movies', color: 'from-yellow-400 to-orange-600', viewers: t('popular'), link: 'https://wardasanam.github.io/what-to-watch/', icon: Film },
@@ -397,7 +403,10 @@ const GET_SECTIONS = (t) => [
 
 const GlitchText = ({ text }) => {
   const [displayText, setDisplayText] = useState("");
-  useEffect(() => { setDisplayText(String(text || "")); }, [text]);
+  useEffect(() => { 
+    setDisplayText(String(text || "")); 
+  }, [text]);
+  
   const scramble = () => {
     if (!text) return;
     const str = String(text);
@@ -409,6 +418,7 @@ const GlitchText = ({ text }) => {
       iter += 1/3;
     }, 30);
   };
+  
   return <span onMouseEnter={scramble} className="font-mono cursor-default hover:text-green-400 transition-colors inline-block">{displayText}</span>;
 };
 
@@ -423,7 +433,12 @@ const UserAvatar = ({ className = "w-10 h-10", src, onClick }) => (
 const ActionSidebar = ({ onLike, likeCount, themeId, isLiked }) => (
   <div className="flex flex-col gap-6 items-center pointer-events-auto">
     <div className="flex flex-col items-center gap-1">
-      <motion.button whileTap={{ scale: 0.8 }} onClick={() => onLike(themeId)} className="w-12 h-12 bg-zinc-800 rounded-full flex items-center justify-center hover:bg-zinc-700 transition-colors cursor-pointer"><Heart size={24} className={isLiked ? "text-red-500 fill-red-500" : "text-white"} /></motion.button>
+      <motion.button 
+        whileTap={{ scale: 0.8 }} 
+        onClick={() => onLike && onLike(themeId)} 
+        className="w-12 h-12 bg-zinc-800 rounded-full flex items-center justify-center hover:bg-zinc-700 transition-colors cursor-pointer">
+        <Heart size={24} className={isLiked ? "text-red-500 fill-red-500" : "text-white"} />
+      </motion.button>
       <span className="text-xs font-bold text-white shadow-black drop-shadow-md"><GlitchText text={`${8500 + likeCount}`} /></span>
     </div>
     <div className="flex flex-col items-center gap-1"><div className="w-12 h-12 bg-zinc-800 rounded-full flex items-center justify-center hover:bg-zinc-700 transition-colors cursor-pointer"><MessageCircle size={24} className="text-white" /></div><span className="text-xs font-bold text-white shadow-black drop-shadow-md">420</span></div>
@@ -550,7 +565,7 @@ const ProjectGallery = ({ projects, theme, onProjectClick, t }) => {
       {projects.map((p, i) => (
         <motion.button
           key={i}
-          onClick={() => onProjectClick(p.link)}
+          onClick={() => onProjectClick && onProjectClick(p.link)}
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: i * 0.05 }}
@@ -564,7 +579,7 @@ const ProjectGallery = ({ projects, theme, onProjectClick, t }) => {
         >
           <div className="relative w-full h-full flex flex-col">
             <div className={`h-24 md:h-32 bg-gradient-to-br ${p.color} flex items-center justify-center relative`}>
-              <p.icon size={32} className="text-white/40 group-hover:scale-110 transition-transform duration-500" />
+              {p.icon && <p.icon size={32} className="text-white/40 group-hover:scale-110 transition-transform duration-500" />}
               <div className="absolute top-2 right-2 flex gap-1">
                  <div className="bg-black/30 backdrop-blur-sm p-1 rounded-full"><Sparkles size={10} className="text-yellow-400" /></div>
               </div>
@@ -1231,9 +1246,9 @@ const TikTokLayout = ({ data, sectionType, onLike, likeCount, isLiked, onProject
                                  <div key={i} className="relative pl-8">
                                     <div className="absolute left-0 top-1 w-6 h-6 bg-zinc-900 border-2 border-pink-500 rounded-full flex items-center justify-center z-10"><GraduationCap size={12} className="text-white" /></div>
                                     <div className="bg-white/5 border border-white/10 p-4 rounded-xl backdrop-blur-md">
-                                       <p className="font-bold text-sm text-white"><GlitchText text={item.degree} /></p>
-                                       <p className="text-xs text-zinc-400 mt-1">{item.school}</p>
-                                       <div className="mt-2 inline-block bg-green-500/20 text-green-400 text-[10px] font-bold px-2 py-0.5 rounded border border-green-500/30">{t('achievement')}</div>
+                                        <p className="font-bold text-sm text-white"><GlitchText text={item.degree} /></p>
+                                        <p className="text-xs text-zinc-400 mt-1">{item.school}</p>
+                                        <div className="mt-2 inline-block bg-green-500/20 text-green-400 text-[10px] font-bold px-2 py-0.5 rounded border border-green-500/30">{t('achievement')}</div>
                                     </div>
                                  </div>
                                ))}
@@ -1256,7 +1271,7 @@ const TikTokLayout = ({ data, sectionType, onLike, likeCount, isLiked, onProject
   );
 };
 
-const InstagramLayout = ({ data, sectionType, onStoryClick, onProjectClick, t }) => {
+const InstagramLayout = ({ data, sectionType, onLike, isLiked, likeCount, onStoryClick, onProjectClick, t }) => {
   const [activeTab, setActiveTab] = useState('grid'); 
   if (sectionType !== 'intro') return null;
   return (
@@ -1309,7 +1324,7 @@ const InstagramLayout = ({ data, sectionType, onStoryClick, onProjectClick, t })
           {activeTab === 'grid' && (
              <motion.div key="grid" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="grid grid-cols-3 gap-1">
                 {GET_SECTIONS(t).find(s => s.id === 'projects').items.map((p, i) => (
-                   <motion.button key={i} onClick={() => onProjectClick(p.link)} className={`block aspect-square relative group overflow-hidden bg-gradient-to-br ${p.color} cursor-pointer`} whileHover={{ scale: 0.98 }}>
+                   <motion.button key={i} onClick={() => onProjectClick && onProjectClick(p.link)} className={`block aspect-square relative group overflow-hidden bg-gradient-to-br ${p.color} cursor-pointer`} whileHover={{ scale: 0.98 }}>
                       <div className="absolute inset-0 flex items-center justify-center text-white">{p.icon && <p.icon size={32} className="drop-shadow-lg" />}</div>
                       <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity duration-200">
                          <div className="text-white font-bold text-xs text-center px-2"><Heart size={16} className="inline mr-1 fill-white" /> 1.2k<br/>{p.title}</div>
@@ -1443,7 +1458,7 @@ const FacebookLayout = ({ data, sectionType, onLike, isLiked, likeCount, onProje
               </div>
               <div className="px-4 py-2 flex justify-between border-b border-zinc-100"><div className="flex items-center gap-1"><div className="w-5 h-5 bg-[#1877F2] rounded-full flex items-center justify-center"><ThumbsUp size={12} className="text-white" /></div><span className="text-xs text-zinc-500">{42 + likeCount}</span></div><span className="text-xs text-zinc-500">3 {t('comments')}</span></div>
               <div className="px-2 py-1 flex">
-                  <motion.button whileTap={{ scale: 1.1 }} onClick={() => onLike('facebook')} className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg font-medium text-sm transition-colors ${isLiked ? "text-blue-600 font-bold" : "text-zinc-600 hover:bg-zinc-50"}`}><ThumbsUp size={18} fill={isLiked ? "currentColor" : "none"} /> {t('likes')}</motion.button>
+                  <motion.button whileTap={{ scale: 1.1 }} onClick={() => onLike && onLike('facebook')} className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg font-medium text-sm transition-colors ${isLiked ? "text-blue-600 font-bold" : "text-zinc-600 hover:bg-zinc-50"}`}><ThumbsUp size={18} fill={isLiked ? "currentColor" : "none"} /> {t('likes')}</motion.button>
                   <button className="flex-1 flex items-center justify-center gap-2 py-2 hover:bg-zinc-50 rounded-lg text-zinc-600 font-medium text-sm"><MessageSquare size={18} /> {t('comments')}</button>
                </div>
           </div>
@@ -1498,17 +1513,17 @@ const TwitterLayout = ({ data, sectionType, onLike, isLiked, likeCount, onProjec
                                <div className="pl-16 pb-4 text-zinc-500 text-sm">{t('threadWork')}</div>
                                {data.items?.map((item, i) => (
                                   <motion.div key={i} initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: i * 0.1 }} className="flex gap-3 relative pb-6 group">
-                                     <div className="flex flex-col items-center z-10 bg-black pt-1"><UserAvatar className="w-12 h-12 border-2 border-black" /></div>
-                                     <div className="flex-1 pt-1 pr-2">
-                                        <div className="flex items-baseline gap-1"><span className="font-bold text-white hover:underline cursor-pointer">Warda Naeem</span><span className="text-zinc-500 text-[15px]">@warda.dev</span><span className="text-zinc-500 text-[15px]">·</span><span className="text-zinc-500 text-[15px]">{item.period.split(' ')[0]}</span></div>
-                                        <div className="mt-0.5 text-[15px] text-white/90"><span className="text-[#1d9bf0] font-bold block mb-1">🚀 {item.role}</span>At <span className="font-bold text-white">@{item.company}</span> — {item.desc}</div>
-                                        <div className="flex justify-between mt-3 max-w-sm text-zinc-500">
-                                           <div className="group flex items-center gap-1 hover:text-[#1d9bf0] cursor-pointer"><MessageSquare size={16} /><span className="text-xs opacity-0 group-hover:opacity-100 transition-opacity">{t('reply')}</span></div>
-                                           <div className="group flex items-center gap-1 hover:text-green-500 cursor-pointer"><Repeat size={16} /><span className="text-xs opacity-0 group-hover:opacity-100 transition-opacity">Repost</span></div>
-                                           <div className="group flex items-center gap-1 hover:text-pink-500 cursor-pointer"><Heart size={16} /><span className="text-xs opacity-0 group-hover:opacity-100 transition-opacity">Like</span></div>
-                                           <div className="group flex items-center gap-1 hover:text-[#1d9bf0] cursor-pointer"><BarChart2 size={16} /></div>
-                                        </div>
-                                     </div>
+                                      <div className="flex flex-col items-center z-10 bg-black pt-1"><UserAvatar className="w-12 h-12 border-2 border-black" /></div>
+                                      <div className="flex-1 pt-1 pr-2">
+                                         <div className="flex items-baseline gap-1"><span className="font-bold text-white hover:underline cursor-pointer">Warda Naeem</span><span className="text-zinc-500 text-[15px]">@warda.dev</span><span className="text-zinc-500 text-[15px]">·</span><span className="text-zinc-500 text-[15px]">{item.period.split(' ')[0]}</span></div>
+                                         <div className="mt-0.5 text-[15px] text-white/90"><span className="text-[#1d9bf0] font-bold block mb-1">🚀 {item.role}</span>At <span className="font-bold text-white">@{item.company}</span> — {item.desc}</div>
+                                         <div className="flex justify-between mt-3 max-w-sm text-zinc-500">
+                                            <div className="group flex items-center gap-1 hover:text-[#1d9bf0] cursor-pointer"><MessageSquare size={16} /><span className="text-xs opacity-0 group-hover:opacity-100 transition-opacity">{t('reply')}</span></div>
+                                            <div className="group flex items-center gap-1 hover:text-green-500 cursor-pointer"><Repeat size={16} /><span className="text-xs opacity-0 group-hover:opacity-100 transition-opacity">Repost</span></div>
+                                            <div className="group flex items-center gap-1 hover:text-pink-500 cursor-pointer" onClick={() => onLike && onLike('twitter')}><Heart size={16} /><span className="text-xs opacity-0 group-hover:opacity-100 transition-opacity">Like</span></div>
+                                            <div className="group flex items-center gap-1 hover:text-[#1d9bf0] cursor-pointer"><BarChart2 size={16} /></div>
+                                         </div>
+                                      </div>
                                   </motion.div>
                                ))}
                             </div>
@@ -1533,7 +1548,7 @@ const TwitterLayout = ({ data, sectionType, onLike, isLiked, likeCount, onProjec
                           </div>
                        )}
                     </div>
-                    <div className="flex justify-between mt-3 max-w-md text-zinc-500"><div className="flex items-center gap-2 group hover:text-[#1d9bf0]"><MessageCircle size={18} /><span className="text-xs">2</span></div><div className="flex items-center gap-2 group hover:text-green-500"><Repeat size={18} /><span className="text-xs">5</span></div><motion.div whileTap={{ scale: 1.2 }} onClick={() => onLike('twitter')} className={`flex items-center gap-2 group cursor-pointer ${isLiked ? "text-pink-500" : "hover:text-pink-500"}`}><Heart size={18} className={isLiked ? "fill-pink-500" : ""} /><span className="text-xs">{24 + likeCount}</span></motion.div></div>
+                    <div className="flex justify-between mt-3 max-w-md text-zinc-500"><div className="flex items-center gap-2 group hover:text-[#1d9bf0]"><MessageCircle size={18} /><span className="text-xs">2</span></div><div className="flex items-center gap-2 group hover:text-green-500"><Repeat size={18} /><span className="text-xs">5</span></div><motion.div whileTap={{ scale: 1.2 }} onClick={() => onLike && onLike('twitter')} className={`flex items-center gap-2 group cursor-pointer ${isLiked ? "text-pink-500" : "hover:text-pink-500"}`}><Heart size={18} className={isLiked ? "fill-pink-500" : ""} /><span className="text-xs">{24 + likeCount}</span></motion.div></div>
                  </div>
               </div>
            </div>
@@ -1593,8 +1608,7 @@ export default function App() {
   const handleLike = useCallback((themeId) => {
     playSound('pop');
     setLikes(prev => {
-      const current = prev[themeId];
-      const newActive = !current.active;
+      const current = prev[themeId] || { count: 0, active: false };
       const newCount = current.count + 1; 
       if (newCount % 10 === 0) { playSound('success'); setShowConfetti(true); setTimeout(() => setShowConfetti(false), 3000); }
       return { ...prev, [themeId]: { count: newCount, active: true } };
@@ -1627,16 +1641,27 @@ export default function App() {
     
   const renderSection = (section) => {
     if (devMode) return null;
-    const props = { data: section, sectionType: section.type, user: user, t, onProjectClick: openProject };
-    let content;
+    const props = { 
+      data: section, 
+      sectionType: section.type, 
+      user: user, 
+      t, 
+      onProjectClick: openProject,
+      onLike: handleLike
+    };
+    
     switch (activeTheme) {
-      case 'tiktok': content = <TikTokLayout {...props} onLike={handleLike} likeCount={likes.tiktok.count} isLiked={likes.tiktok.active} />; break;
-      case 'instagram': content = <InstagramLayout {...props} onStoryClick={() => setShowStory(true)} isLiked={likes.instagram.active} likeCount={likes.instagram.count} />; break;
-      case 'facebook': content = <FacebookLayout {...props} onLike={handleLike} isLiked={likes.facebook.active} likeCount={likes.facebook.count} />; break;
-      case 'twitter': content = <TwitterLayout {...props} onLike={handleLike} isLiked={likes.twitter.active} likeCount={likes.twitter.count} />; break;
-      default: content = <TikTokLayout {...props} />;
+      case 'tiktok': 
+        return <TikTokLayout {...props} likeCount={likes.tiktok.count} isLiked={likes.tiktok.active} />;
+      case 'instagram': 
+        return <InstagramLayout {...props} onStoryClick={() => setShowStory(true)} isLiked={likes.instagram.active} likeCount={likes.instagram.count} />;
+      case 'facebook': 
+        return <FacebookLayout {...props} isLiked={likes.facebook.active} likeCount={likes.facebook.count} />;
+      case 'twitter': 
+        return <TwitterLayout {...props} isLiked={likes.twitter.active} likeCount={likes.twitter.count} />;
+      default: 
+        return <TikTokLayout {...props} likeCount={likes.tiktok.count} isLiked={likes.tiktok.active} />;
     }
-    return content; 
   };
 
   return (
