@@ -97,7 +97,6 @@ const THEMES = {
   twitter: { id: 'twitter', label: 'X / Twitter', icon: Twitter, bg: 'bg-black', text: 'text-[#e7e9ea]', accent: 'text-[#1d9bf0]', layoutMode: 'feed', font: 'font-sans' }
 };
 
-// --- TRANSLATION DATA ---
 const UI_TRANSLATIONS = {
   en: {
     theme: "THEME",
@@ -174,7 +173,6 @@ const UI_TRANSLATIONS = {
     trendingInGermany: "Trending in Germany",
     techTrending: "Technology · Trending",
     showMore: "Show more",
-    // Facebook Sidebar Items
     memories: "Memories",
     saved: "Saved",
     groups: "Groups",
@@ -187,13 +185,11 @@ const UI_TRANSLATIONS = {
     projectManager: "Project Manager",
     topReactDev: "Top React Dev",
     hireMeCap: "HIRE ME!",
-    // Sticker Labels
     stickerFeature: "It's a feature",
     stickerFire: "Production on Fire",
     stickerJava: "Java-Script",
     stickerLegacy: "Legacy Code",
     sticker404: "Warning: 404",
-    // Project Viewers/Tags
     match98: "98% Match",
     newSeason: "New Season",
     trending: "Trending",
@@ -202,7 +198,6 @@ const UI_TRANSLATIONS = {
     chill: "Chill",
     popular: "Popular",
     productivity: "Productivity",
-    // Project Titles
     pExpense: "Expense Tracker",
     pMemory: "Memory Game",
     pChat: "AI Chat App",
@@ -293,7 +288,6 @@ const UI_TRANSLATIONS = {
     trendingInGermany: "Trends in Deutschland",
     techTrending: "Technologie · Trends",
     showMore: "Mehr anzeigen",
-    // Facebook Sidebar Items
     memories: "Memories",
     saved: "Gespeichert",
     groups: "Gruppen",
@@ -306,13 +300,11 @@ const UI_TRANSLATIONS = {
     projectManager: "Projektmanager",
     topReactDev: "Top React Dev",
     hireMeCap: "STELL MICH EIN!",
-    // Sticker Labels
     stickerFeature: "Ist ein Feature",
     stickerFire: "Produktion brennt",
     stickerJava: "Java-Script",
     stickerLegacy: "Legacy Code",
     sticker404: "Warnung: 404",
-    // Project Viewers/Tags
     match98: "98% Treffer",
     newSeason: "Neue Staffel",
     trending: "Angesagt",
@@ -321,7 +313,6 @@ const UI_TRANSLATIONS = {
     chill: "Entspannt",
     popular: "Beliebt",
     productivity: "Produktivität",
-    // Project Titles
     pExpense: "Ausgaben-Tracker",
     pMemory: "Memory Spiel",
     pChat: "KI Chat App",
@@ -370,6 +361,7 @@ const GET_SECTIONS = (t) => [
     { title: t('pGym'), genre: t('lang') === 'de' ? 'Fitness • Gesundheit' : 'Fitness • Health', color: 'from-red-500 to-orange-600', viewers: t('match98'), link: 'https://wardasanam.github.io/gym-app/', icon: Flame },
     { title: t('pInsta'), genre: 'Social • UI/UX', color: 'from-pink-500 to-rose-700', viewers: t('viral'), link: 'https://wardasanam.github.io/instagram-clone/', icon: Image },
     { title: t('pLofi'), genre: t('lang') === 'de' ? 'Audio • Vibe' : 'Audio • Vibe', color: 'from-cyan-500 to-blue-700', viewers: t('chill'), link: 'https://wardasanam.github.io/LOFI-STUDY-ROOM/', icon: Headphones },
+    { title: t('pWatch'), genre: t('lang') === 'de' ? 'API • Filme' : 'API • Movies', color: 'from-yellow-400 to-orange-600', viewers: t('popular'), link: 'https://wardasanam.github.io/what-to-watch/', icon: Film },
     { title: t('pWatch'), genre: t('lang') === 'de' ? 'API • Filme' : 'API • Movies', color: 'from-yellow-400 to-orange-600', viewers: t('popular'), link: 'https://wardasanam.github.io/what-to-watch/', icon: Film },
     { title: t('pTask'), genre: t('lang') === 'de' ? 'Produktivität • Tools' : 'Productivity • Tools', color: 'from-teal-400 to-emerald-700', viewers: t('productivity'), link: 'https://wardasanam.github.io/TaskDrops/', icon: CheckSquare },
     { title: t('pLanguage'), genre: 'React • Education', color: 'from-amber-400 to-orange-600', viewers: t('viral'), link: 'https://wardasanam.github.io/language-app/', icon: Languages },
@@ -480,13 +472,11 @@ const DigitalSparkCursor = () => {
   return <canvas ref={canvasRef} className="fixed inset-0 pointer-events-none z-[9999]" />;
 };
 
-// --- 3. FEATURE COMPONENTS ---
-
 const TestimonialsHub = ({ items, theme, t }) => {
   const isDark = theme === 'tiktok' || theme === 'twitter';
-  const textColor = isDark ? 'text-white' : 'text-black';
-  const cardBg = isDark ? 'bg-zinc-800/50' : 'bg-white';
-  const borderColor = isDark ? 'border-zinc-700' : 'border-zinc-100';
+  const isTikTok = theme === 'tiktok';
+  const isFB = theme === 'facebook';
+  const isTwitter = theme === 'twitter';
 
   const [likedComments, setLikedComments] = useState({});
 
@@ -495,8 +485,140 @@ const TestimonialsHub = ({ items, theme, t }) => {
     setLikedComments(prev => ({ ...prev, [id]: !prev[id] }));
   };
 
+  if (isTikTok) {
+    return (
+      <div className="w-full px-4 py-4 pointer-events-auto text-left max-w-md mx-auto">
+        <div className="flex items-center justify-between mb-6 border-b border-white/10 pb-3">
+          <h3 className="text-sm font-black text-white/90 tracking-tight uppercase flex items-center gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-pink-500 shadow-[0_0_8px_#ec4899] animate-pulse" />
+            {items.length} {t('comments')}
+          </h3>
+          <div className="flex gap-2">
+             <span className="text-[10px] font-black text-pink-500 uppercase tracking-widest bg-pink-500/10 px-2 py-0.5 rounded">Trending</span>
+          </div>
+        </div>
+        <div className="flex flex-col gap-8">
+          {items.map((item, i) => (
+            <motion.div key={item.id} initial={{ opacity: 0, x: -5 }} whileInView={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.1 }} className="flex gap-3 relative group" >
+              <div className="relative shrink-0">
+                <div className={`w-10 h-10 rounded-full overflow-hidden border ${i === 0 ? 'border-pink-500 p-[1.5px]' : 'border-white/10'}`}>
+                  <img src={`https://i.pravatar.cc/100?u=${item.user}`} alt={item.user} className="w-full h-full rounded-full object-cover" />
+                </div>
+                {i === 0 && <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-pink-500 text-[8px] font-black px-1 rounded-sm text-white shadow-lg">LIVE</div>}
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-1.5 mb-0.5">
+                  <span className="font-black text-[13px] text-zinc-300 hover:text-white transition-colors cursor-pointer tracking-tight">{item.user.toLowerCase().replace(' ', '_')}</span>
+                  {i === 0 && <ShieldCheck size={12} className="text-blue-400 fill-blue-400/20" />}
+                  {i === 1 && <Award size={12} className="text-yellow-500" />}
+                </div>
+                <p className="text-[14px] text-white/95 leading-snug pr-12 font-medium tracking-tight">{item.text}</p>
+                <div className="flex items-center gap-4 mt-2.5 text-[11px] font-bold text-zinc-500 uppercase tracking-tighter">
+                  <span className="hover:text-zinc-300 cursor-pointer">12h</span>
+                  <span className="cursor-pointer hover:text-zinc-300 transition-colors uppercase">{t('reply')}</span>
+                  {i === 0 && <div className="flex items-center gap-1 text-pink-500 bg-pink-500/10 px-1.5 py-0.5 rounded-sm"><Heart size={10} fill="currentColor" /><span className="text-[9px] font-black tracking-widest">Creator liked</span></div>}
+                </div>
+              </div>
+              <div className="flex flex-col items-center gap-0.5 absolute right-0 top-1">
+                <motion.button whileTap={{ scale: 0.6 }} onClick={() => toggleLike(item.id)} className={`transition-all duration-300 ${likedComments[item.id] ? 'text-pink-500 drop-shadow-[0_0_10px_rgba(236,72,153,0.6)]' : 'text-zinc-500 hover:text-zinc-300'}`} >
+                  <Heart size={20} fill={likedComments[item.id] ? "currentColor" : "none"} strokeWidth={2.5} />
+                </motion.button>
+                <span className="text-[11px] font-black text-zinc-500">{likedComments[item.id] ? "1.3k" : item.likes}</span>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+        <div className="mt-12 pt-5 border-t border-white/5 flex items-center gap-4 group cursor-text">
+           <div className="w-8 h-8 rounded-full bg-zinc-800 overflow-hidden border border-white/10 shrink-0"><img src={PROFILE.avatar} className="w-full h-full object-cover" /></div>
+           <div className="flex-1 bg-white/5 rounded-full px-5 py-2.5 text-[13px] font-bold text-zinc-500 group-hover:bg-white/10 transition-colors">Add comment...</div>
+           <div className="flex gap-3 text-zinc-500 pr-2"><Smile size={20} className="hover:text-zinc-300 transition-colors" /><Sticker size={20} className="hover:text-zinc-300 transition-colors" /></div>
+        </div>
+      </div>
+    );
+  }
+
+  if (isFB) {
+    return (
+      <div className="w-full px-2 py-4 flex flex-col gap-4">
+        {items.map((item, i) => (
+          <motion.div key={item.id} initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} className="bg-white rounded-xl shadow-sm border border-zinc-200 overflow-hidden">
+             <div className="p-4 flex items-start gap-3">
+                <div className="w-10 h-10 rounded-full bg-zinc-100 overflow-hidden shrink-0 border border-zinc-200">
+                   <img src={`https://i.pravatar.cc/100?u=${item.user}`} alt={item.user} className="w-full h-full object-cover" />
+                </div>
+                <div className="flex-1 min-w-0">
+                   <div className="flex items-center gap-1.5 flex-wrap">
+                      <span className="font-extrabold text-sm text-zinc-900 hover:underline cursor-pointer">{item.user}</span>
+                      <span className="text-zinc-500 text-sm">recommends</span>
+                      <span className="font-extrabold text-sm text-zinc-900 hover:underline cursor-pointer">Warda Naeem</span>
+                   </div>
+                   <div className="flex items-center gap-1 text-[11px] text-zinc-500 font-bold mt-0.5">
+                      <span>12 Oct 2023</span>
+                      <span>•</span>
+                      <Users size={10} />
+                   </div>
+                   <p className="text-sm text-zinc-800 mt-3 leading-relaxed">{item.text}</p>
+                </div>
+             </div>
+             <div className="bg-zinc-50 px-4 py-1.5 border-t border-zinc-100 flex items-center justify-between">
+                <div className="flex items-center gap-1.5">
+                   <div className="w-4 h-4 rounded-full bg-[#1877F2] flex items-center justify-center"><ThumbsUp size={10} className="text-white" /></div>
+                   <span className="text-[12px] font-bold text-zinc-500">{parseInt(item.likes) + 42}</span>
+                </div>
+                <span className="text-[12px] font-bold text-zinc-500">2 Comments</span>
+             </div>
+             <div className="px-2 py-1 flex border-t border-zinc-100">
+                <button className="flex-1 flex items-center justify-center gap-2 py-2 hover:bg-zinc-100 rounded-lg text-zinc-600 font-bold text-sm transition-colors"><ThumbsUp size={18} /> Like</button>
+                <button className="flex-1 flex items-center justify-center gap-2 py-2 hover:bg-zinc-100 rounded-lg text-zinc-600 font-bold text-sm transition-colors"><MessageSquare size={18} /> Comment</button>
+             </div>
+          </motion.div>
+        ))}
+      </div>
+    );
+  }
+
+  if (isTwitter) {
+    return (
+      <div className="w-full border-t border-zinc-800 mt-2">
+        {items.map((item, i) => (
+          <motion.div key={item.id} initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} className="p-4 border-b border-zinc-800 hover:bg-white/[0.03] transition-colors cursor-pointer group">
+             <div className="flex gap-3">
+                <div className="w-10 h-10 rounded-full bg-zinc-800 overflow-hidden shrink-0 border border-zinc-700">
+                   <img src={`https://i.pravatar.cc/100?u=${item.user}`} alt={item.user} className="w-full h-full object-cover" />
+                </div>
+                <div className="flex-1 min-w-0">
+                   <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-1 flex-wrap">
+                         <span className="font-bold text-white hover:underline truncate">{item.user}</span>
+                         <div className="text-[#1d9bf0]"><ShieldCheck size={16} fill="currentColor" className="text-white" /></div>
+                         <span className="text-zinc-500 text-sm truncate">@{item.handle || item.user.toLowerCase().replace(' ', '')}</span>
+                         <span className="text-zinc-500">·</span>
+                         <span className="text-zinc-500 text-sm">2h</span>
+                      </div>
+                      <MoreHorizontal size={18} className="text-zinc-500 group-hover:text-[#1d9bf0] transition-colors" />
+                   </div>
+                   <p className="text-[15px] text-white/95 mt-1 leading-normal">{item.text}</p>
+                   <div className="flex justify-between items-center mt-3 max-w-md text-zinc-500">
+                      <div className="flex items-center gap-1 hover:text-[#1d9bf0] transition-colors"><MessageCircle size={16} /><span className="text-[11px] font-bold">12</span></div>
+                      <div className="flex items-center gap-1 hover:text-green-500 transition-colors"><Repeat size={16} /><span className="text-[11px] font-bold">5</span></div>
+                      <div className="flex items-center gap-1 hover:text-pink-500 transition-colors"><Heart size={16} /><span className="text-[11px] font-bold">{item.likes}</span></div>
+                      <div className="flex items-center gap-1 hover:text-[#1d9bf0] transition-colors"><BarChart2 size={16} /><span className="text-[11px] font-bold">12k</span></div>
+                   </div>
+                </div>
+             </div>
+          </motion.div>
+        ))}
+      </div>
+    );
+  }
+
+  // Generic Fallback
+  const textColor = isDark ? 'text-white' : 'text-black';
+  const cardBg = isDark ? 'bg-zinc-800/50' : 'bg-white';
+  const borderColor = isDark ? 'border-zinc-700' : 'border-zinc-100';
+
   return (
-    <div className="w-full px-4 py-4 pointer-events-auto">
+    <div className="w-full px-4 py-4 pointer-events-auto text-left">
       <div className={`flex items-center justify-between mb-4 ${textColor}`}>
         <h3 className="text-xl font-black flex items-center gap-2">
           <MessageCircle className="text-blue-500" />
@@ -504,47 +626,22 @@ const TestimonialsHub = ({ items, theme, t }) => {
         </h3>
         <span className="text-xs font-bold opacity-60">{items.length} {t('comments')}</span>
       </div>
-
       <div className="flex flex-col gap-3">
         {items.map((item, i) => (
-          <motion.div 
-            key={item.id}
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ delay: i * 0.15 }}
-            className={`p-4 rounded-xl border ${borderColor} ${cardBg} backdrop-blur-sm relative group`}
-          >
+          <motion.div key={item.id} initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.15 }} className={`p-4 rounded-xl border ${borderColor} ${cardBg} backdrop-blur-sm relative group`} >
             <div className="flex items-start gap-3">
               <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 p-[2px] flex-shrink-0">
-                 <div className={`w-full h-full rounded-full flex items-center justify-center overflow-hidden ${isDark ? 'bg-black' : 'bg-white'}`}>
-                    <User size={20} className={isDark ? "text-white" : "text-black"} />
-                 </div>
+                 <div className={`w-full h-full rounded-full flex items-center justify-center overflow-hidden ${isDark ? 'bg-black' : 'bg-white'}`}><User size={20} className={isDark ? "text-white" : "text-black"} /></div>
               </div>
-              
               <div className="flex-1">
                  <div className="flex items-center justify-between">
-                    <div>
-                       <span className={`font-bold text-sm mr-2 ${textColor}`}>{item.user}</span>
-                       <span className={`text-xs ${isDark ? 'text-zinc-400' : 'text-zinc-500'}`}>{item.role}</span>
-                    </div>
+                    <div><span className={`font-bold text-sm mr-2 ${textColor}`}>{item.user}</span><span className={`text-xs ${isDark ? 'text-zinc-400' : 'text-zinc-500'}`}>{item.role}</span></div>
                  </div>
-                 <p className={`text-sm mt-1 leading-relaxed ${isDark ? 'text-zinc-200' : 'text-zinc-700'}`}>
-                    {item.text}
-                 </p>
-                 <div className={`flex items-center gap-4 mt-2 text-xs ${isDark ? 'text-zinc-500' : 'text-zinc-400'} font-bold`}>
-                    <span className="cursor-pointer hover:underline">{t('reply')}</span>
-                    <span>{item.likes} {t('likes')}</span>
-                 </div>
+                 <p className={`text-sm mt-1 leading-relaxed ${isDark ? 'text-zinc-200' : 'text-zinc-700'}`}>{item.text}</p>
+                 <div className={`flex items-center gap-4 mt-2 text-xs ${isDark ? 'text-zinc-500' : 'text-zinc-400'} font-bold`}><span className="cursor-pointer hover:underline">{t('reply')}</span><span>{item.likes} {t('likes')}</span></div>
               </div>
-
               <div className="flex flex-col items-center gap-1 pt-2">
-                 <motion.button 
-                   whileTap={{ scale: 0.8 }} 
-                   onClick={() => toggleLike(item.id)}
-                   className={`${likedComments[item.id] ? 'text-red-500' : 'text-zinc-400 hover:text-red-500'} transition-colors`}
-                 >
-                    <Heart size={16} fill={likedComments[item.id] ? "currentColor" : "none"} />
-                 </motion.button>
+                 <motion.button whileTap={{ scale: 0.8 }} onClick={() => toggleLike(item.id)} className={`${likedComments[item.id] ? 'text-red-500' : 'text-zinc-400 hover:text-red-500'} transition-colors`}><Heart size={16} fill={likedComments[item.id] ? "currentColor" : "none"} /></motion.button>
               </div>
             </div>
           </motion.div>
@@ -554,54 +651,110 @@ const TestimonialsHub = ({ items, theme, t }) => {
   );
 };
 
-// --- UPDATED PROJECT GALLERY (CLEAN GRID CARDS) ---
-const ProjectGallery = ({ projects, theme, onProjectClick, t }) => {
-  const isTikTok = theme === 'tiktok';
-  const isFacebook = theme === 'facebook';
-  const isTwitter = theme === 'twitter';
+const ArrowRight = ({ size = 16, className = "" }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <path d="M5 12h14M12 5l7 7-7 7" />
+  </svg>
+);
+
+const ModernProjectCard = ({ p, i, theme, onProjectClick, t }) => {
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  const rotateX = useTransform(y, [-100, 100], [10, -10]);
+  const rotateY = useTransform(x, [-100, 100], [-10, 10]);
+
+  const sheenX = useTransform(x, [-100, 100], [0, 100]);
+  const sheenY = useTransform(y, [-100, 100], [0, 100]);
+  const sheenTemplate = useMotionTemplate`radial-gradient(circle at ${sheenX}% ${sheenY}%, rgba(255,255,255,0.15) 0%, transparent 80%)`;
+
+  const isDark = theme === 'tiktok' || theme === 'twitter';
+
+  const handleMouseMove = (event) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    const mouseX = event.clientX - rect.left - rect.width / 2;
+    const mouseY = event.clientY - rect.top - rect.height / 2;
+    x.set(mouseX);
+    y.set(mouseY);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
 
   return (
-    <div className="w-full px-4 py-2 grid grid-cols-2 gap-3 pb-4">
-      {projects.map((p, i) => (
-        <motion.button
-          key={i}
-          onClick={() => onProjectClick && onProjectClick(p.link)}
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ delay: i * 0.05 }}
-          className={`group block relative overflow-hidden transition-all rounded-2xl border text-left ${
-            isTikTok 
-              ? 'aspect-[3/4] bg-zinc-900 border-zinc-800' 
-              : isFacebook
-                ? 'bg-white border-zinc-200 shadow-sm hover:shadow-md'
-                : 'bg-black border-zinc-800 hover:bg-zinc-900/50'
-          }`}
-        >
-          <div className="relative w-full h-full flex flex-col">
-            <div className={`h-24 md:h-32 bg-gradient-to-br ${p.color} flex items-center justify-center relative`}>
-              {p.icon && <p.icon size={32} className="text-white/40 group-hover:scale-110 transition-transform duration-500" />}
-              <div className="absolute top-2 right-2 flex gap-1">
-                 <div className="bg-black/30 backdrop-blur-sm p-1 rounded-full"><Sparkles size={10} className="text-yellow-400" /></div>
-              </div>
-            </div>
-            
-            <div className="p-3 flex-1 flex flex-col justify-between">
-              <div>
-                <h4 className={`font-black text-xs md:text-sm leading-tight uppercase ${isTwitter || isTikTok ? 'text-white' : 'text-zinc-900'}`}>{p.title}</h4>
-                <p className="text-[10px] text-zinc-500 mt-1 font-bold">{p.genre.split(' • ')[1] || p.genre}</p>
-              </div>
-              
-              <div className="mt-3 flex items-center justify-between border-t border-zinc-200/10 pt-2">
-                <span className={`text-[10px] font-black ${isFacebook ? 'text-blue-500' : 'text-pink-500'}`}>{p.viewers}</span>
-                <div className="flex gap-2 opacity-40 group-hover:opacity-100 transition-opacity">
-                   <ExternalLink size={12} className={isTwitter || isTikTok ? 'text-white' : 'text-black'} />
-                </div>
-              </div>
-            </div>
-            <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+    <motion.button
+      onClick={() => onProjectClick && onProjectClick(p.link)}
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ delay: i * 0.08, duration: 0.5 }}
+      style={{ rotateX, rotateY, perspective: 1000 }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className={`group relative w-full aspect-[4/5] rounded-3xl overflow-hidden border transition-colors duration-500 flex flex-col ${
+        isDark 
+          ? 'bg-zinc-900/40 border-white/5 hover:border-white/20' 
+          : 'bg-white border-zinc-200 shadow-xl hover:shadow-2xl'
+      }`}
+    >
+      <div className={`absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity duration-500 bg-gradient-to-br ${p.color}`} />
+      <motion.div style={{ background: sheenTemplate }} className="absolute inset-0 pointer-events-none" />
+
+      <div className="relative h-1/2 flex items-center justify-center p-6">
+        <div className={`absolute inset-0 bg-gradient-to-br ${p.color} opacity-20 group-hover:scale-110 transition-transform duration-700`} />
+        <div className="relative z-10 w-16 h-16 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 group-hover:scale-125 group-hover:rotate-6 transition-all duration-500">
+           {p.icon && <p.icon size={32} className="text-white drop-shadow-[0_10px_10px_rgba(255,255,255,0.5)]" />}
+        </div>
+        <div className="absolute top-4 right-4 flex gap-1">
+          <motion.div animate={{ scale: [1, 1.2, 1] }} transition={{ repeat: Infinity, duration: 2 }} className="bg-black/20 backdrop-blur-md p-1.5 rounded-full border border-white/10">
+            <Sparkles size={12} className="text-yellow-400" />
+          </motion.div>
+        </div>
+      </div>
+
+      <div className="relative flex-1 p-4 flex flex-col justify-between text-left">
+        <div className="space-y-1">
+          <div className="flex items-center gap-2">
+            <span className={`text-[10px] font-black uppercase tracking-tighter px-2 py-0.5 rounded-full bg-gradient-to-r ${p.color} text-white`}>
+              {p.viewers}
+            </span>
+            <span className={`text-[10px] font-bold ${isDark ? 'text-zinc-500' : 'text-zinc-400'}`}>
+              #{p.genre.split(' • ')[1] || p.genre}
+            </span>
           </div>
-        </motion.button>
-      ))}
+          <h4 className={`text-sm md:text-base font-black leading-tight uppercase tracking-tight transition-colors ${isDark ? 'text-white group-hover:text-pink-400' : 'text-zinc-900 group-hover:text-blue-600'}`}>
+            {p.title}
+          </h4>
+        </div>
+
+        <div className={`flex items-center justify-between pt-3 border-t ${isDark ? 'border-white/5' : 'border-zinc-100'}`}>
+          <div className="flex -space-x-2">
+            {[1, 2, 3].map(n => (
+              <div key={n} className="w-5 h-5 rounded-full border-2 border-zinc-900 bg-zinc-800 overflow-hidden">
+                <img src={`https://i.pravatar.cc/100?u=${p.title}${n}`} className="w-full h-full object-cover" alt="User" />
+              </div>
+            ))}
+          </div>
+          <motion.div whileHover={{ x: 3 }} className={`flex items-center gap-1 text-[10px] font-bold ${isDark ? 'text-zinc-500' : 'text-zinc-400'}`}>
+            <span>VIEW</span>
+            <ArrowRight size={10} />
+          </motion.div>
+        </div>
+      </div>
+      <div className={`absolute -bottom-12 -right-12 w-24 h-24 bg-gradient-to-br ${p.color} blur-[40px] opacity-0 group-hover:opacity-40 transition-opacity duration-500`} />
+    </motion.button>
+  );
+};
+
+const ProjectGallery = ({ projects, theme, onProjectClick, t }) => {
+  return (
+    <div className="w-full px-4 py-6">
+      <div className="grid grid-cols-2 gap-4">
+        {projects.map((p, i) => (
+          <ModernProjectCard key={i} p={p} i={i} theme={theme} onProjectClick={onProjectClick} t={t} />
+        ))}
+      </div>
     </div>
   );
 };
@@ -732,7 +885,7 @@ const ContactForm = ({ theme, placeholder, t }) => {
       {isSent ? (
         <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} className={`p-4 rounded-lg text-center font-bold ${isDark ? 'bg-green-500/20 text-green-400 border border-green-500/50' : 'bg-green-50 text-green-600 border border-green-200'}`}>{t('messageSent')}</motion.div>
       ) : (
-        <form onSubmit={handleSubmit} className="flex flex-col gap-3 w-full">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-3 w-full text-left">
           {theme !== 'facebook' && theme !== 'twitter' && <input type="text" name="name" placeholder={t('yourName')} required className={`p-3 rounded-lg border outline-none transition-all ${isDark ? 'bg-zinc-800 border-zinc-700 text-white placeholder-zinc-500 focus:border-pink-500' : 'bg-gray-50 border-gray-200 text-black focus:border-blue-500'}`} />}
           
           {theme === 'facebook' ? (
@@ -773,10 +926,10 @@ const MusicPlayer = ({ t }) => {
 
 const StoryOverlay = ({ onClose, t }) => (
   <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.9 }} onClick={onClose} className="fixed inset-0 z-[60] bg-black/90 flex items-center justify-center p-4 cursor-pointer">
-    <div className="w-full max-w-sm h-[80vh] bg-gradient-to-b from-purple-600 to-blue-600 rounded-2xl relative overflow-hidden flex flex-col">
-       <div className="absolute top-2 left-0 right-0 flex gap-1 px-2"><motion.div initial={{ width: 0 }} animate={{ width: "100%" }} transition={{ duration: 5 }} className="h-1 bg-white/50 rounded-full flex-1" /></div>
-       <div className="p-4 flex items-center gap-2 text-white"><UserAvatar className="w-8 h-8" /><span className="font-bold text-sm">warda.dev</span><span className="text-white/60 text-xs">2h</span><X className="ml-auto" size={20} /></div>
-       <div className="flex-1 flex flex-col items-center justify-center text-white text-center p-8"><h2 className="text-4xl font-black mb-4">{t('welcome')} 👋</h2><p className="text-lg">{t('thanksPortfolio')}</p></div>
+    <div className="w-full max-sm:w-full max-w-sm h-[80vh] bg-gradient-to-b from-purple-600 to-blue-600 rounded-2xl relative overflow-hidden flex flex-col">
+        <div className="absolute top-2 left-0 right-0 flex gap-1 px-2"><motion.div initial={{ width: 0 }} animate={{ width: "100%" }} transition={{ duration: 5 }} className="h-1 bg-white/50 rounded-full flex-1" /></div>
+        <div className="p-4 flex items-center gap-2 text-white"><UserAvatar className="w-8 h-8" /><span className="font-bold text-sm">warda.dev</span><span className="text-white/60 text-xs">2h</span><X className="ml-auto" size={20} /></div>
+        <div className="flex-1 flex flex-col items-center justify-center text-white text-center p-8"><h2 className="text-4xl font-black mb-4">{t('welcome')} 👋</h2><p className="text-lg">{t('thanksPortfolio')}</p></div>
     </div>
   </motion.div>
 );
@@ -838,7 +991,6 @@ const LiveStreamHearts = () => {
         </div>
     );
 };
-
 
 const MatrixRain = () => {
   const canvasRef = useRef(null);
@@ -1032,7 +1184,6 @@ const GraffitiCanvas = ({ isActive, onClose, t }) => {
   );
 };
 
-// --- SIDEBARS ---
 const ThemeSidebars = ({ theme, t }) => {
   if (theme === 'tiktok' || typeof window === 'undefined' || window.innerWidth < 1024) return null;
   const SidebarContainer = ({ children, side }) => (<div className={`fixed top-24 bottom-0 ${side === 'left' ? 'left-4 xl:left-12' : 'right-4 xl:right-12'} w-64 hidden lg:flex flex-col gap-6 overflow-y-auto pb-8 z-30`}>{children}</div>);
@@ -1044,7 +1195,6 @@ const ThemeSidebars = ({ theme, t }) => {
   return null;
 };
 
-// --- LAYOUTS (TIKTOK/INSTA/FB/TWITTER) ---
 const TikTokDesktopSidebar = ({ type, data, t }) => (
   <div className="w-full h-full flex flex-col justify-center items-center p-8 relative">
       <div className="relative">
@@ -1061,8 +1211,7 @@ const TikTokDesktopSidebar = ({ type, data, t }) => (
 
 const CreativeSidebarLeft = ({ sectionType }) => {
   return (
-    <div className="hidden lg:flex flex-col w-64 h-[600px] justify-between gap-6 relative pr-4"> 
-        {/* Holographic Card */}
+    <div className="hidden lg:flex flex-col w-64 h-[600px] justify-between gap-6 relative pr-4 text-left"> 
         <div className="flex-1 bg-black/40 backdrop-blur-xl border border-pink-500/30 rounded-3xl p-6 relative overflow-hidden group shadow-[0_0_30px_rgba(236,72,153,0.1)]">
             <div className="absolute inset-0 bg-gradient-to-b from-pink-500/5 to-purple-600/5 pointer-events-none" />
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-pink-500 to-transparent -translate-x-full group-hover:animate-scan" />
@@ -1080,7 +1229,6 @@ const CreativeSidebarLeft = ({ sectionType }) => {
                 <p className="animate-pulse">{`> awaiting_input...`}</p>
             </div>
 
-            {/* System Visualizer */}
             <div className="mt-8 relative">
                 <div className="flex justify-between text-xs text-white/50 mb-1">
                     <span>CPU</span>
@@ -1108,7 +1256,6 @@ const CreativeSidebarLeft = ({ sectionType }) => {
             </div>
         </div>
 
-        {/* 3D Floating Element Placeholder */}
         <div className="h-40 bg-zinc-900/50 rounded-3xl border border-white/5 flex items-center justify-center relative overflow-hidden">
              <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-500/20 via-transparent to-transparent animate-pulse" />
              <Code2 size={48} className="text-white/20 animate-spin-slow" />
@@ -1120,8 +1267,7 @@ const CreativeSidebarLeft = ({ sectionType }) => {
 
 const CreativeSidebarRight = () => {
     return (
-        <div className="hidden lg:flex flex-col w-64 h-[600px] justify-start gap-6 relative pl-4"> 
-            {/* Music Player Widget */}
+        <div className="hidden lg:flex flex-col w-64 h-[600px] justify-start gap-6 relative pl-4 text-left"> 
             <div className="h-48 bg-black/40 backdrop-blur-xl border border-cyan-500/30 rounded-3xl p-4 flex flex-col items-center justify-center relative overflow-hidden shadow-[0_0_30px_rgba(6,182,212,0.1)]">
                 <div className="w-24 h-24 rounded-full border-4 border-zinc-800 bg-zinc-900 flex items-center justify-center relative animate-spin-slow shadow-xl">
                     <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-cyan-500 to-blue-500" />
@@ -1131,7 +1277,6 @@ const CreativeSidebarRight = () => {
                     <h3 className="text-xs font-bold text-white tracking-widest">NOW PLAYING</h3>
                     <p className="text-[10px] text-cyan-400 truncate w-32 mx-auto">Lo-Fi Coding Beats</p>
                 </div>
-                {/* Visualizer bars */}
                 <div className="absolute bottom-0 left-0 right-0 h-8 flex items-end justify-center gap-1 opacity-50">
                     {[...Array(10)].map((_, i) => (
                         <motion.div 
@@ -1144,7 +1289,6 @@ const CreativeSidebarRight = () => {
                 </div>
             </div>
 
-            {/* Trending / Activity */}
             <div className="flex-1 bg-zinc-900/50 backdrop-blur-md rounded-3xl p-4 border border-white/5 relative overflow-hidden">
                 <h3 className="font-bold text-xs text-zinc-500 uppercase mb-4 flex items-center gap-2">
                     <TrendingUp size={14} /> Trending
@@ -1158,7 +1302,6 @@ const CreativeSidebarRight = () => {
                     ))}
                 </div>
                 
-                {/* Floating particles */}
                 <div className="absolute inset-0 pointer-events-none">
                     {[...Array(5)].map((_, i) => (
                         <motion.div
@@ -1175,35 +1318,100 @@ const CreativeSidebarRight = () => {
     );
 }
 
-const TikTokLayout = ({ data, sectionType, onLike, likeCount, isLiked, onProjectClick, t }) => {
-  const [activeTab, setActiveTab] = useState('foryou'); 
+// --- 3. 3D PROJECT GRID COMPONENT ---
+
+const ThreeDProjectGrid = ({ projects, onProjectClick, t }) => {
+  const containerRef = useRef(null);
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  // Smooth springs for grid rotation
+  const springConfig = { damping: 20, stiffness: 100 };
+  const rotateX = useSpring(useTransform(mouseY, [-300, 300], [12, -12]), springConfig);
+  const rotateY = useSpring(useTransform(mouseX, [-300, 300], [-12, 12]), springConfig);
+
+  const handleMouseMove = (e) => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    mouseX.set(e.clientX - centerX);
+    mouseY.set(e.clientY - centerY);
+  };
+
+  const handleMouseLeave = () => {
+    mouseX.set(0);
+    mouseY.set(0);
+  };
 
   return (
-    <div className="relative w-full h-full bg-black text-white">
+    <div 
+      ref={containerRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className="w-full perspective-[1200px] py-4"
+    >
+      <motion.div 
+        style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
+        className="grid grid-cols-3 gap-1 md:gap-2 px-1"
+      >
+        {projects.map((p, i) => (
+          <motion.button
+            key={i}
+            onClick={() => { playSound('click'); onProjectClick && onProjectClick(p.link); }}
+            initial={{ opacity: 0, translateZ: -50 }}
+            animate={{ opacity: 1, translateZ: 0 }}
+            transition={{ delay: i * 0.05 }}
+            whileHover={{ translateZ: 60, scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className={`relative aspect-square overflow-hidden bg-gradient-to-br ${p.color} shadow-lg rounded-sm group cursor-pointer`}
+            style={{ transformStyle: 'preserve-3d' }}
+          >
+            {/* 3D Levitating Icon */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none" style={{ transform: 'translateZ(30px)' }}>
+              {p.icon && <p.icon size={36} className="text-white drop-shadow-[0_10px_10px_rgba(0,0,0,0.5)] group-hover:scale-110 transition-transform duration-300" />}
+            </div>
+
+            {/* Glossy Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+            
+            {/* Info Badge */}
+            <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity duration-200" style={{ transform: 'translateZ(10px)' }}>
+              <div className="text-white font-bold text-[10px] md:text-xs text-center px-1">
+                <Heart size={14} className="inline mr-1 fill-white" /> 1.2k<br/>
+                <span className="uppercase tracking-tighter">{p.title}</span>
+              </div>
+            </div>
+          </motion.button>
+        ))}
+      </motion.div>
+    </div>
+  );
+};
+
+const TikTokLayout = ({ data, sectionType, onLike, likeCount, isLiked, onProjectClick, t, activeTab }) => {
+  return (
+    <div className="relative w-full h-full bg-black text-white text-left">
+      {/* Background VFX */}
       <div className="absolute inset-0 z-0 bg-zinc-900 pointer-events-none">
          <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/90" />
          <motion.div animate={{ scale: [1, 1.1, 1], rotate: [0, 5, 0] }} transition={{ duration: 10, repeat: Infinity }} className="absolute top-1/4 left-1/4 w-96 h-96 bg-pink-600/20 rounded-full blur-[100px]" />
       </div>
 
-      <div className="absolute top-4 w-full flex justify-center items-center z-50 text-sm font-bold shadow-black drop-shadow-md">
-         <div className="flex gap-4">
-             <button onClick={() => setActiveTab('foryou')} className={`cursor-pointer transition-opacity ${activeTab === 'foryou' ? 'text-white border-b-2 border-white pb-1' : 'text-white/60 hover:text-white/90'}`}>{t('forYou')}</button>
-             <span className="opacity-40">|</span>
-             <button onClick={() => setActiveTab('live')} className={`cursor-pointer transition-opacity ${activeTab === 'live' ? 'text-white border-b-2 border-white pb-1' : 'text-white/60 hover:text-white/90'}`}>{t('live')}</button>
-         </div>
-         <div className="absolute right-4"><Search size={20} className="text-white" /></div>
-      </div>
-
-      <div className="relative w-full h-full flex items-center justify-center pt-20 pb-20">
+      <div className="relative w-full h-full flex items-center justify-center pt-20 pb-20 overflow-hidden">
          {activeTab === 'live' ? (
-            <div className="w-full h-full flex flex-col items-center justify-center"><TikTokDesktopSidebar type={sectionType} data={data} t={t} /></div>
+            <div className="w-full h-full flex flex-col items-center justify-center overflow-hidden touch-none pointer-events-auto">
+              <TikTokDesktopSidebar type={sectionType} data={data} t={t} />
+            </div>
          ) : (
             <div className="w-full h-full flex flex-row items-center justify-center relative px-4">
-               <CreativeSidebarLeft sectionType={sectionType} />
-               <div className="w-full max-w-md h-full flex flex-col justify-center relative z-20">
-                   <div className="flex-1 mb-4 flex flex-col justify-center max-h-full min-w-0">
-                      <h3 className="font-bold text-lg text-white shadow-black drop-shadow-md mb-2">@{data.id === 'intro' ? 'warda.dev' : <GlitchText text={data.title} />}</h3>
-                      <div className="overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-white/20 max-h-[70vh]">
+                <CreativeSidebarLeft sectionType={sectionType} />
+                
+                <div className="w-full max-w-md h-full flex flex-col justify-center relative z-20">
+                    <div className="flex-1 mb-4 flex flex-col justify-center max-h-full min-w-0">
+                       <h3 className="font-bold text-lg text-white shadow-black drop-shadow-md mb-2">@{data.id === 'intro' ? 'warda.dev' : data.title}</h3>
+                       
+                       <div className="overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-white/20 max-h-[70vh]">
                           {sectionType === 'intro' && (
                             <div className="text-white/90 text-sm space-y-4">
                               <div className="flex gap-4 mb-2">
@@ -1220,6 +1428,7 @@ const TikTokLayout = ({ data, sectionType, onLike, likeCount, isLiked, onProject
                               <p className="font-bold text-pink-400 text-xs mt-2">{data.content.hashtags}</p>
                             </div>
                           )}
+                          
                           {sectionType === 'timeline' && (
                             <div className="space-y-4 relative pl-4 border-l border-white/20">
                                {data.items?.map((item, i) => (
@@ -1235,10 +1444,12 @@ const TikTokLayout = ({ data, sectionType, onLike, likeCount, isLiked, onProject
                                ))}
                             </div>
                           )}
+                          
                           {sectionType === 'tags' && <SkillMarquee tags={data.tags} theme="tiktok" t={t} />}
                           {sectionType === 'vibe' && <VibeCheck lang={t('lang')} />}
                           {sectionType === 'projects' && <ProjectGallery projects={data.items} theme="tiktok" onProjectClick={onProjectClick} t={t} />}
                           {sectionType === 'testimonials' && <TestimonialsHub items={data.items} theme="tiktok" t={t} />}
+                          
                           {(sectionType === 'education' || sectionType === 'cards') && (
                             <div className="space-y-6 pl-2 relative">
                                <div className="absolute left-[11px] top-2 bottom-2 w-0.5 bg-gradient-to-b from-pink-500 to-purple-600/20"></div>
@@ -1255,15 +1466,17 @@ const TikTokLayout = ({ data, sectionType, onLike, likeCount, isLiked, onProject
                             </div>
                           )}
                           {sectionType === 'contact' && <div className="flex flex-col gap-2">{data.links?.map((l, i) => (<a key={i} href={l.href} target="_blank" className="flex items-center gap-2 text-white/90 hover:text-pink-400"><l.icon size={16} /><span className="text-sm">{l.val}</span></a>))} <ContactForm theme="tiktok" t={t} /></div>}
-                      </div>
-                      <div className="flex items-center justify-between gap-2 text-white/80 mt-4 pt-4 border-t border-white/10">
+                       </div>
+                       
+                       <div className="flex items-center justify-between gap-2 text-white/80 mt-4 pt-4 border-t border-white/10">
                         <div className="flex items-center gap-2"><Music2 size={14} className="animate-spin-slow" /><p className="text-xs">Original Sound - Warda Naeem</p></div>
                         <div className="animate-spin-slow"><Disc size={24} /></div>
-                      </div>
-                   </div>
-               </div>
-               <ActionSidebar onLike={onLike} likeCount={likeCount} themeId="tiktok" isLiked={isLiked} />
-               <CreativeSidebarRight />
+                       </div>
+                    </div>
+                </div>
+                
+                <ActionSidebar onLike={onLike} likeCount={likeCount} themeId="tiktok" isLiked={isLiked} />
+                <CreativeSidebarRight />
             </div>
          )}
       </div>
@@ -1275,7 +1488,7 @@ const InstagramLayout = ({ data, sectionType, onLike, isLiked, likeCount, onStor
   const [activeTab, setActiveTab] = useState('grid'); 
   if (sectionType !== 'intro') return null;
   return (
-    <div className="w-full bg-white min-h-screen flex flex-col items-center pb-20"> 
+    <div className="w-full bg-white min-h-screen flex flex-col items-center pb-20 text-left"> 
       <div className="max-w-xl w-full pt-4 px-4 pb-2">
         <div className="flex items-center justify-between mb-4">
              <div className="relative group cursor-pointer" onClick={onStoryClick}>
@@ -1303,12 +1516,12 @@ const InstagramLayout = ({ data, sectionType, onLike, isLiked, likeCount, onStor
             <button className="bg-gray-100 p-1.5 rounded-lg border border-gray-200"><User size={20} /></button>
         </div>
         <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide mb-2">
-           {[{ label: 'Work', icon: Briefcase }, { label: 'Skills', icon: Code2 }, { label: 'Life', icon: Coffee }, { label: 'Travel', icon: Plane }].map((h, i) => (
+            {[{ label: 'Work', icon: Briefcase }, { label: 'Skills', icon: Code2 }, { label: 'Life', icon: Coffee }, { label: 'Travel', icon: Plane }].map((h, i) => (
              <div key={i} className="flex flex-col items-center gap-1 min-w-[64px] cursor-pointer" onClick={() => playSound('pop')}>
                 <div className="w-16 h-16 rounded-full border border-gray-200 p-1"><div className="w-full h-full bg-gray-50 rounded-full flex items-center justify-center text-gray-700"><h.icon size={24} strokeWidth={1.5} /></div></div>
                 <span className="text-xs">{h.label}</span>
              </div>
-           ))}
+            ))}
         </div>
       </div>
 
@@ -1322,44 +1535,155 @@ const InstagramLayout = ({ data, sectionType, onLike, isLiked, likeCount, onStor
       <div className="w-full max-w-xl min-h-[400px]">
         <AnimatePresence mode="wait">
           {activeTab === 'grid' && (
-             <motion.div key="grid" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="grid grid-cols-3 gap-1">
-                {GET_SECTIONS(t).find(s => s.id === 'projects').items.map((p, i) => (
-                   <motion.button key={i} onClick={() => onProjectClick && onProjectClick(p.link)} className={`block aspect-square relative group overflow-hidden bg-gradient-to-br ${p.color} cursor-pointer`} whileHover={{ scale: 0.98 }}>
-                      <div className="absolute inset-0 flex items-center justify-center text-white">{p.icon && <p.icon size={32} className="drop-shadow-lg" />}</div>
-                      <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity duration-200">
-                         <div className="text-white font-bold text-xs text-center px-2"><Heart size={16} className="inline mr-1 fill-white" /> 1.2k<br/>{p.title}</div>
-                      </div>
-                   </motion.button>
-                ))}
+             <motion.div key="grid" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                {/* UPGRADED 3D PROJECT GRID */}
+                <ThreeDProjectGrid 
+                  projects={GET_SECTIONS(t).find(s => s.id === 'projects').items} 
+                  onProjectClick={onProjectClick} 
+                  t={t} 
+                />
              </motion.div>
           )}
           {activeTab === 'list' && (
-             <motion.div key="list" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="p-4 space-y-6">
+             <motion.div key="list" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0 }} className="p-4 space-y-10">
+                {/* Creative Experience Section */}
                 <div>
-                   <h3 className="font-bold text-sm text-gray-400 uppercase tracking-wider mb-4">Experience</h3>
-                   <div className="border-l-2 border-gray-200 ml-2 space-y-6 pl-6 relative">
+                   <div className="flex items-center gap-2 mb-6">
+                      <div className="h-1 w-8 bg-blue-500 rounded-full" />
+                      <h3 className="font-black text-sm uppercase tracking-widest text-gray-400">Career Roadmap</h3>
+                   </div>
+                   <div className="space-y-8 relative">
+                      <div className="absolute left-[19px] top-2 bottom-2 w-0.5 bg-gradient-to-b from-blue-500 via-purple-500 to-transparent" />
                       {GET_SECTIONS(t).find(s => s.id === 'experience').items.map((item, i) => (
-                         <div key={i} className="relative"><div className="absolute -left-[31px] top-1 w-4 h-4 bg-white border-2 border-gray-300 rounded-full"></div><h4 className="font-bold text-sm">{item.role}</h4><p className="text-xs text-blue-600 font-semibold">{item.company}</p><p className="text-sm text-gray-600 mt-1">{item.desc}</p></div>
+                         <motion.div 
+                           key={i} 
+                           initial={{ opacity: 0, x: -10 }} 
+                           whileInView={{ opacity: 1, x: 0 }} 
+                           transition={{ delay: i * 0.1 }}
+                           className="relative pl-12 group"
+                         >
+                            <div className="absolute left-0 top-1 w-10 h-10 bg-white border-2 border-blue-500 rounded-2xl flex items-center justify-center z-10 group-hover:bg-blue-500 group-hover:text-white transition-colors duration-300 shadow-sm group-hover:shadow-blue-200">
+                              <Briefcase size={18} />
+                            </div>
+                            <div className="bg-gray-50/50 p-5 rounded-2xl border border-gray-100 group-hover:border-blue-200 group-hover:bg-white transition-all duration-300">
+                               <div className="flex justify-between items-start mb-2">
+                                  <h4 className="font-bold text-gray-900 group-hover:text-blue-600 transition-colors">{item.role}</h4>
+                                  <span className="text-[10px] font-bold text-blue-500 bg-blue-50 px-2 py-1 rounded-md">{item.period.split(' ')[0]}</span>
+                               </div>
+                               <p className="text-xs font-black text-purple-600 mb-2 tracking-tight">@{item.company}</p>
+                               <p className="text-sm text-gray-600 leading-relaxed">{item.desc}</p>
+                               <div className="mt-4 flex gap-2 overflow-x-auto scrollbar-hide">
+                                  {['React', 'UI/UX', 'Product'].map((tag, idx) => (
+                                     <span key={idx} className="text-[10px] bg-white border border-gray-200 text-gray-400 px-2 py-0.5 rounded-full">#{tag}</span>
+                                  ))}
+                               </div>
+                            </div>
+                         </motion.div>
                       ))}
                    </div>
                 </div>
+
+                {/* Creative Education Section */}
                 <div>
-                   <h3 className="font-bold text-sm text-gray-400 uppercase tracking-wider mb-4">Education</h3>
-                   <div className="space-y-3">
+                   <div className="flex items-center gap-2 mb-6">
+                      <div className="h-1 w-8 bg-purple-500 rounded-full" />
+                      <h3 className="font-black text-sm uppercase tracking-widest text-gray-400">Academic Honors</h3>
+                   </div>
+                   <div className="grid grid-cols-1 gap-4">
                       {GET_SECTIONS(t).find(s => s.id === 'education').items.map((item, i) => (
-                         <div key={i} className="flex items-center gap-4 bg-gray-50 p-4 rounded-xl"><div className="w-10 h-10 bg-black text-white rounded-full flex items-center justify-center font-bold text-xs flex-shrink-0">EDU</div><div><h4 className="font-bold text-sm">{item.degree}</h4><p className="text-xs text-gray-500">{item.school}</p></div></div>
+                         <motion.div 
+                           key={i} 
+                           whileHover={{ y: -5 }}
+                           className="relative overflow-hidden p-5 rounded-3xl bg-gradient-to-br from-white to-gray-50 border border-gray-100 shadow-sm flex items-center gap-5"
+                         >
+                            <div className="absolute top-0 right-0 -mr-4 -mt-4 w-24 h-24 bg-purple-500/5 rounded-full blur-2xl" />
+                            <div className="w-14 h-14 bg-purple-600 rounded-2xl flex flex-col items-center justify-center text-white shadow-lg shadow-purple-100">
+                               <GraduationCap size={24} />
+                               <span className="text-[8px] font-black mt-1">GPA 1.0</span>
+                            </div>
+                            <div>
+                               <h4 className="font-bold text-gray-900 leading-tight mb-1">{item.degree}</h4>
+                               <p className="text-xs text-purple-600 font-bold mb-2 uppercase tracking-tighter">{item.school}</p>
+                               <div className="flex items-center gap-2 text-[10px] font-bold text-gray-400">
+                                  <Clock size={12} />
+                                  <span>{item.year}</span>
+                                  <span className="h-1 w-1 bg-gray-300 rounded-full" />
+                                  <span className="text-green-500 uppercase">Completed</span>
+                               </div>
+                            </div>
+                         </motion.div>
                       ))}
                    </div>
                 </div>
              </motion.div>
           )}
           {activeTab === 'tagged' && (
-             <motion.div key="tagged" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="p-4 space-y-6">
-                <div className="text-center py-4"><h3 className="font-bold text-lg">{t('mentionsGear')}</h3><p className="text-xs text-gray-500">{t('taggedIn')}</p></div>
+             <motion.div key="tagged" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="p-4 space-y-8">
+                <div className="text-center py-2">
+                   <h3 className="font-black text-xl bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-yellow-500 uppercase tracking-tighter">{t('mentionsGear')}</h3>
+                   <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-1">{t('taggedIn')}</p>
+                </div>
+                
                 <SkillMarquee tags={GET_SECTIONS(t).find(s => s.id === 'skills').tags} theme="instagram" t={t} />
-                <div className="space-y-4">
+                
+                {/* Creative Hype Section - Verified Shoutouts */}
+                <div className="grid grid-cols-1 gap-6 px-2">
                   {GET_SECTIONS(t).find(s => s.id === 'testimonials').items.map((item, i) => (
-                      <div key={i} className="flex gap-3"><div className="w-8 h-8 bg-gray-200 rounded-full flex-shrink-0"></div><div className="bg-gray-50 p-3 rounded-lg rounded-tl-none flex-1"><p className="text-xs font-bold">{item.user} <span className="font-normal text-gray-500">mentioned you</span></p><p className="text-sm text-gray-800 mt-1">"{item.text}"</p></div></div>
+                      <motion.div 
+                        key={i} 
+                        initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                        whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                        transition={{ delay: i * 0.1 }}
+                        className="relative group p-[1px] rounded-[32px] bg-gradient-to-tr from-pink-500 via-purple-500 to-yellow-500 overflow-hidden shadow-xl"
+                      >
+                         <div className="bg-white rounded-[31px] p-6 h-full relative">
+                            {/* Floating Reaction */}
+                            <motion.div 
+                              animate={{ y: [0, -10, 0] }} 
+                              transition={{ duration: 3, repeat: Infinity, delay: i * 0.5 }}
+                              className="absolute -top-2 -right-2 bg-white shadow-lg rounded-full p-2 border border-pink-100 z-10"
+                            >
+                               {i % 2 === 0 ? <Heart size={16} className="text-red-500 fill-red-500" /> : <Star size={16} className="text-yellow-400 fill-yellow-400" />}
+                            </motion.div>
+
+                            <div className="flex items-center gap-4 mb-4">
+                               <div className="w-12 h-12 rounded-full p-[2px] bg-gradient-to-tr from-gray-200 to-gray-50">
+                                  <div className="w-full h-full rounded-full bg-zinc-100 flex items-center justify-center overflow-hidden">
+                                     <img src={`https://i.pravatar.cc/150?u=${item.user}`} alt={item.user} className="w-full h-full object-cover" />
+                                  </div>
+                               </div>
+                               <div>
+                                  <div className="flex items-center gap-1">
+                                     <span className="text-sm font-black text-gray-900">{item.user}</span>
+                                     <div className="bg-blue-500 rounded-full p-0.5"><Check size={8} className="text-white" strokeWidth={4} /></div>
+                                  </div>
+                                  <p className="text-[10px] font-bold text-pink-500 tracking-tighter uppercase">{item.role}</p>
+                               </div>
+                            </div>
+                            
+                            <div className="relative">
+                               <Quote size={24} className="absolute -top-2 -left-2 text-gray-100 -z-0" />
+                               <p className="text-sm text-gray-700 leading-relaxed relative z-10 font-medium italic">
+                                 "{item.text}"
+                               </p>
+                            </div>
+
+                            <div className="mt-4 pt-4 border-t border-gray-50 flex justify-between items-center">
+                               <div className="flex -space-x-2">
+                                  {[1,2,3].map(avatarId => (
+                                      <div key={avatarId} className="w-6 h-6 rounded-full border-2 border-white bg-gray-100 overflow-hidden">
+                                         <img src={`https://i.pravatar.cc/50?u=${avatarId+i*10}`} className="w-full h-full object-cover" />
+                                      </div>
+                                  ))}
+                                  <div className="w-6 h-6 rounded-full border-2 border-white bg-pink-50 flex items-center justify-center text-[8px] font-bold text-pink-500">+{i % 2 === 0 ? '12' : '45'}</div>
+                               </div>
+                               <div className="flex items-center gap-1 text-[10px] font-black text-gray-300 uppercase tracking-widest">
+                                  <Heart size={10} className="fill-gray-200 text-gray-200" /> 
+                                  <span>Verified</span>
+                               </div>
+                            </div>
+                         </div>
+                      </motion.div>
                   ))}
                 </div>
              </motion.div>
@@ -1381,94 +1705,150 @@ const InstagramLayout = ({ data, sectionType, onLike, isLiked, likeCount, onStor
   );
 };
 
-const FacebookLayout = ({ data, sectionType, onLike, isLiked, likeCount, onProjectClick, t }) => (
-  <div className="w-full bg-[#F0F2F5] flex justify-center pb-8"> 
-     <div className="w-full max-w-xl space-y-2">
-        {sectionType === 'intro' ? (
-           <div className="bg-white rounded-xl shadow-sm overflow-hidden pb-4 mx-4 md:mx-0 mt-4">
-              <div className="h-32 bg-gray-200 relative"><img src={PROFILE.cover} alt="Cover" className="w-full h-full object-cover opacity-80" /></div>
-              <div className="px-4 relative">
-                 <div className="-mt-12 mb-3 relative z-10"><div className="w-32 h-32 rounded-full border-4 border-white bg-zinc-200 overflow-hidden flex items-center justify-center"><img src={PROFILE.avatar} alt="Profile" className="w-full h-full object-cover" /></div></div>
-                 <div><h1 className="text-2xl font-bold text-black">{data.content.name}</h1><div className="flex items-center gap-1 text-zinc-500 text-sm mt-1"><MapPin size={14} /> {data.content.location}</div><p className="text-zinc-600 font-medium">{data.content.summary}</p></div>
-                 <div className="flex gap-2 border-t pt-4 mt-4"><div className="flex-1 bg-[#E7F3FF] text-[#1877F2] py-2 rounded-md font-bold text-center text-sm cursor-pointer">{t('addFriend')}</div><div className="flex-1 bg-zinc-100 text-black py-2 rounded-md font-bold text-center text-sm cursor-pointer">{t('message')}</div></div>
-              </div>
-           </div>
-        ) : (
-          <div className="bg-white rounded-xl shadow-sm mx-4 md:mx-0 mb-4 overflow-hidden">
-              <div className="p-4 flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <UserAvatar className="w-10 h-10" />
-                  <div>
-                    <p className="font-bold text-sm text-black">Warda Naeem</p>
-                    <div className="flex items-center gap-1 text-xs text-zinc-500">
-                      <span>Just now</span><span>•</span><span className="font-bold">🌍</span>
+const FacebookLayout = ({ data, sectionType, onLike, isLiked, likeCount, onProjectClick, t }) => {
+  const getPostText = () => {
+    switch(sectionType) {
+      case 'timeline': return "Reflecting on my professional journey so far. Grateful for all the amazing teams I've worked with! 💼✨";
+      case 'projects': return "Check out my #ProjectHub! These are some of my latest works built with React & Tailwind. 🚀";
+      case 'education': return "Learning never stops. Happy to share my academic path! 🎓📚";
+      case 'tags': return "Sharing my current #TechStack. Always staying curious! 🛠️💻";
+      case 'testimonials': return "The community hype is real! Thank you for the kind words. ❤️🙌";
+      case 'vibe': return "Vibe check! Just a peek at life AFK. 🎮☕";
+      case 'contact': return "Let's connect! Always open to new opportunities and networking. 🤝";
+      default: return "Sharing some updates from my dev life! 💻";
+    }
+  };
+
+  return (
+    <div className="w-full bg-[#F0F2F5] flex justify-center pb-8 text-left"> 
+      <div className="w-full max-w-xl space-y-2">
+          {sectionType === 'intro' ? (
+            <div className="bg-white rounded-xl shadow-sm overflow-hidden pb-4 mx-4 md:mx-0 mt-4">
+                <div className="h-32 bg-gray-200 relative"><img src={PROFILE.cover} alt="Cover" className="w-full h-full object-cover opacity-80" /></div>
+                <div className="px-4 relative">
+                  <div className="-mt-12 mb-3 relative z-10"><div className="w-32 h-32 rounded-full border-4 border-white bg-zinc-200 overflow-hidden flex items-center justify-center"><img src={PROFILE.avatar} alt="Profile" className="w-full h-full object-cover" /></div></div>
+                  <div><h1 className="text-2xl font-bold text-black">{data.content.name}</h1><div className="flex items-center gap-1 text-zinc-500 text-sm mt-1"><MapPin size={14} /> {data.content.location}</div><p className="text-zinc-600 font-medium">{data.content.summary}</p></div>
+                  <div className="flex gap-2 border-t pt-4 mt-4"><div className="flex-1 bg-[#E7F3FF] text-[#1877F2] py-2 rounded-md font-bold text-center text-sm cursor-pointer">{t('addFriend')}</div><div className="flex-1 bg-zinc-100 text-black py-2 rounded-md font-bold text-center text-sm cursor-pointer">{t('message')}</div></div>
+                </div>
+            </div>
+          ) : (
+            <div className="bg-white rounded-xl shadow-sm mx-4 md:mx-0 mb-4 overflow-hidden">
+                <div className="p-4 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <UserAvatar className="w-10 h-10" />
+                    <div>
+                      <p className="font-bold text-sm text-black">Warda Naeem</p>
+                      <div className="flex items-center gap-1 text-xs text-zinc-500">
+                        <span>Just now</span><span>•</span><span className="font-bold">🌍</span>
+                      </div>
                     </div>
                   </div>
+                  < MoreHorizontal size={20} className="text-zinc-500" />
                 </div>
-                <MoreHorizontal size={20} className="text-zinc-500" />
-              </div>
-              
-              <div className="px-4 pb-2">
-                <p className="text-sm text-zinc-800 font-medium mb-4">
-                  Check out my <span className="text-[#1877F2] font-bold">#ProjectHub</span>! These are some of my latest works built with React & Tailwind. 🚀
-                </p>
-              </div>
+                
+                <div className="px-4 pb-2">
+                  <p className="text-sm text-zinc-800 font-medium mb-4">
+                    {getPostText()}
+                  </p>
+                </div>
 
-              <div className="bg-zinc-50 border-y border-zinc-100 p-2 text-black">
-                 {sectionType === 'timeline' && (
-                    <div className="relative pl-4 space-y-6 py-4">
-                        <div className="absolute left-[21px] top-2 bottom-2 w-0.5 bg-gray-200"></div>
-                        {data.items?.map((item, i) => (
-                        <motion.div key={i} initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }} className="relative flex gap-4">
-                            <div className="w-10 h-10 rounded-full bg-[#1877F2] text-white flex items-center justify-center border-4 border-[#F0F2F5] z-10 shrink-0"><Briefcase size={18} /></div>
-                            <div className="bg-white p-4 rounded-xl shadow-sm border border-zinc-100 flex-1">
-                                <div className="flex items-center justify-between mb-1"><h4 className="font-bold text-lg text-zinc-800 leading-tight">{item.role}</h4><span className="text-[10px] font-bold bg-[#E7F3FF] text-[#1877F2] px-2 py-1 rounded-full">{item.period}</span></div>
-                                <p className="text-sm font-semibold text-[#1877F2] mb-2">@{item.company}</p>
-                                <p className="text-sm text-zinc-600 leading-relaxed">{item.desc}</p>
-                            </div>
-                        </motion.div>
-                        ))}
-                    </div>
-                 )}
-                 {sectionType === 'tags' && <SkillMarquee tags={data.tags} theme="facebook" t={t} />}
-                 {sectionType === 'vibe' && <VibeCheck lang={t('lang')} />}
-                 {sectionType === 'projects' && (
-                   <ProjectGallery projects={data.items} theme="facebook" onProjectClick={onProjectClick} t={t} />
-                 )}
-                 {sectionType === 'testimonials' && <TestimonialsHub items={data.items} theme="facebook" t={t} />}
-                 {(sectionType === 'education' || sectionType === 'cards') && (
-                    <div className="grid gap-3 py-4">
-                        {data.items?.map((item, i) => (
-                        <motion.div key={i} whileHover={{ y: -2 }} className="bg-white p-0 rounded-xl shadow-sm border border-zinc-200 overflow-hidden group">
-                            <div className="h-16 bg-gradient-to-r from-blue-600 to-cyan-500 relative"><div className="absolute -bottom-6 left-4 w-12 h-12 bg-white rounded-full p-1 border-2 border-white"><div className="w-full h-full bg-zinc-100 rounded-full flex items-center justify-center"><GraduationCap size={20} className="text-blue-600" /></div></div></div>
-                            <div className="pt-8 pb-4 px-4"><h4 className="font-bold text-zinc-900">{item.school}</h4><p className="text-sm text-zinc-500 mb-2">{item.degree}</p><div className="flex items-center gap-2 text-xs font-medium text-zinc-400"><Clock size={12} /><span>{item.year}</span></div></div>
-                        </motion.div>
-                        ))}
-                    </div>
-                 )}
-                 {sectionType === 'contact' && (
-                    <div className="bg-white rounded-xl shadow-sm border border-zinc-200 overflow-hidden my-4">
-                        <div className="p-4 border-b border-zinc-100 flex justify-between items-center"><h3 className="font-bold text-lg text-zinc-900">{t('connect')}</h3><span className="text-xs font-bold text-[#1877F2] bg-[#E7F3FF] px-2 py-1 rounded-full">{t('openForWork')}</span></div>
-                        <div className="p-4 grid grid-cols-2 gap-3">
-                            {data.links?.map((l, i) => (<a key={i} href={l.href} target="_blank" className="bg-zinc-50 border border-zinc-200 rounded-lg p-3 flex flex-col items-center text-center hover:shadow-md transition-shadow group"><div className="w-12 h-12 bg-white rounded-full flex items-center justify-center border border-zinc-200 mb-2 group-hover:scale-110 transition-transform"><l.icon size={24} className="text-[#1877F2]" /></div><span className="font-bold text-sm text-zinc-800">{l.label}</span><span className="text-xs text-zinc-500 mb-3 truncate w-full">{l.val}</span><button className="w-full bg-[#E7F3FF] text-[#1877F2] font-bold text-xs py-2 rounded-md hover:bg-[#dbeafe] transition-colors">{t('connect')}</button></a>))}
-                        </div>
-                        <div className="p-4 border-t border-zinc-100"><div className="flex gap-3"><UserAvatar className="w-10 h-10" /><div className="flex-1 bg-zinc-100 rounded-2xl px-4 py-2 hover:bg-zinc-200 transition-colors cursor-text"><ContactForm theme="facebook" t={t} /></div></div></div>
-                    </div>
-                 )}
-              </div>
-              <div className="px-4 py-2 flex justify-between border-b border-zinc-100"><div className="flex items-center gap-1"><div className="w-5 h-5 bg-[#1877F2] rounded-full flex items-center justify-center"><ThumbsUp size={12} className="text-white" /></div><span className="text-xs text-zinc-500">{42 + likeCount}</span></div><span className="text-xs text-zinc-500">3 {t('comments')}</span></div>
-              <div className="px-2 py-1 flex">
-                  <motion.button whileTap={{ scale: 1.1 }} onClick={() => onLike && onLike('facebook')} className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg font-medium text-sm transition-colors ${isLiked ? "text-blue-600 font-bold" : "text-zinc-600 hover:bg-zinc-50"}`}><ThumbsUp size={18} fill={isLiked ? "currentColor" : "none"} /> {t('likes')}</motion.button>
-                  <button className="flex-1 flex items-center justify-center gap-2 py-2 hover:bg-zinc-50 rounded-lg text-zinc-600 font-medium text-sm"><MessageSquare size={18} /> {t('comments')}</button>
-               </div>
-          </div>
-        )}
-     </div>
-  </div>
-);
+                <div className="bg-zinc-50 border-y border-zinc-100 p-2 text-black">
+                  {sectionType === 'timeline' && (
+                      <div className="flex flex-col gap-3 py-2 px-1">
+                          {data.items?.map((item, i) => (
+                          <motion.div 
+                            key={i} 
+                            initial={{ opacity: 0, x: -10 }} 
+                            whileInView={{ opacity: 1, x: 0 }} 
+                            className="bg-white p-5 rounded-xl border border-zinc-200 shadow-sm relative overflow-hidden"
+                          >
+                              <div className="absolute top-0 right-0 p-3">
+                                 <Briefcase size={24} className="text-[#1877F2] opacity-10" />
+                              </div>
+                              <div className="flex items-center gap-2 mb-1">
+                                 <span className="bg-[#E7F3FF] text-[#1877F2] text-[10px] font-black px-2 py-0.5 rounded-md uppercase">Experience</span>
+                                 <span className="text-[10px] font-bold text-zinc-400 tracking-widest uppercase">{item.period}</span>
+                              </div>
+                              <h4 className="font-extrabold text-lg text-zinc-900 leading-tight">{item.role}</h4>
+                              <p className="text-[#1877F2] font-black text-sm mb-3">@{item.company}</p>
+                              <p className="text-sm text-zinc-600 leading-relaxed border-l-4 border-zinc-100 pl-4">{item.desc}</p>
+                          </motion.div>
+                          ))}
+                      </div>
+                  )}
+                  {sectionType === 'tags' && <SkillMarquee tags={data.tags} theme="facebook" t={t} />}
+                  {sectionType === 'vibe' && <VibeCheck lang={t('lang')} />}
+                  {sectionType === 'projects' && (
+                      <div className="max-h-[600px] overflow-y-auto scrollbar-hide bg-zinc-100 rounded-xl">
+                        <ProjectGallery projects={data.items} theme="facebook" onProjectClick={onProjectClick} t={t} />
+                      </div>
+                  )}
+                  {sectionType === 'testimonials' && <TestimonialsHub items={data.items} theme="facebook" t={t} />}
+                  {(sectionType === 'education' || sectionType === 'cards') && (
+                      <div className="flex flex-col gap-4 py-4 px-2">
+                          {data.items?.map((item, i) => (
+                          <motion.div 
+                            key={i} 
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            className="bg-white rounded-xl shadow-md border border-zinc-200 overflow-hidden"
+                          >
+                              <div className="p-4 flex items-start gap-4">
+                                <div className="w-16 h-16 rounded-xl bg-blue-50 flex items-center justify-center shrink-0 border border-blue-100 shadow-inner">
+                                    <GraduationCap size={32} className="text-[#1877F2]" />
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                    <div className="flex justify-between items-start">
+                                      <h4 className="font-extrabold text-lg text-zinc-900 leading-tight hover:underline cursor-pointer truncate mr-2">{item.school}</h4>
+                                      {item.year.includes('Present') ? (
+                                        <div className="bg-blue-100 text-[#1877F2] text-[10px] font-black px-2 py-0.5 rounded-full uppercase tracking-tighter shrink-0">In Progress</div>
+                                      ) : (
+                                        <div className="bg-green-100 text-green-700 text-[10px] font-black px-2 py-0.5 rounded-full uppercase tracking-tighter shrink-0">Graduated</div>
+                                      )}
+                                    </div>
+                                    <p className="text-[#1877F2] font-bold text-sm mt-1">{item.degree}</p>
+                                    <div className="flex items-center gap-2 text-xs font-semibold text-zinc-500 mt-2">
+                                      <Clock size={14} />
+                                      <span>Class of {item.year.split(' ').pop().trim()}</span>
+                                      <span className="h-1 w-1 bg-zinc-300 rounded-full" />
+                                      <span>{item.year}</span>
+                                    </div>
+                                </div>
+                              </div>
+                              <div className="bg-zinc-50 px-4 py-2 flex items-center justify-between border-t border-zinc-100">
+                                <div className="flex -space-x-1">
+                                    {[1,2,3].map(n => <div key={n} className="w-5 h-5 rounded-full border border-white bg-zinc-300 overflow-hidden"><img src={`https://i.pravatar.cc/50?u=edu${i}${n}`} alt="alumni" /></div>)}
+                                </div>
+                                <span className="text-[10px] font-bold text-zinc-500">42 alumni you may know</span>
+                              </div>
+                          </motion.div>
+                          ))}
+                      </div>
+                  )}
+                  {sectionType === 'contact' && (
+                      <div className="bg-white rounded-xl shadow-sm border border-zinc-200 overflow-hidden my-4">
+                          <div className="p-4 border-b border-zinc-100 flex justify-between items-center"><h3 className="font-bold text-lg text-zinc-900">{t('connect')}</h3><span className="text-xs font-bold text-[#1877F2] bg-[#E7F3FF] px-2 py-1 rounded-full">{t('openForWork')}</span></div>
+                          <div className="p-4 grid grid-cols-2 gap-3">
+                              {data.links?.map((l, i) => (<a key={i} href={l.href} target="_blank" className="bg-zinc-50 border border-zinc-200 rounded-lg p-3 flex flex-col items-center text-center hover:shadow-md transition-shadow group"><div className="w-12 h-12 bg-white rounded-full flex items-center justify-center border border-zinc-200 mb-2 group-hover:scale-110 transition-transform"><l.icon size={24} className="text-[#1877F2]" /></div><span className="font-bold text-sm text-zinc-800">{l.label}</span><span className="text-xs text-zinc-500 mb-3 truncate w-full">{l.val}</span><button className="w-full bg-[#E7F3FF] text-[#1877F2] font-bold text-xs py-2 rounded-md hover:bg-[#dbeafe] transition-colors">{t('connect')}</button></a>))}
+                          </div>
+                          <div className="p-4 border-t border-zinc-100"><div className="flex gap-3"><UserAvatar className="w-10 h-10" /><div className="flex-1 bg-zinc-100 rounded-2xl px-4 py-2 hover:bg-zinc-200 transition-colors cursor-text"><ContactForm theme="facebook" t={t} /></div></div></div>
+                      </div>
+                  )}
+                </div>
+                <div className="px-4 py-2 flex justify-between border-b border-zinc-100"><div className="flex items-center gap-1"><div className="w-5 h-5 bg-[#1877F2] rounded-full flex items-center justify-center"><ThumbsUp size={12} className="text-white" /></div><span className="text-xs text-zinc-500">{42 + likeCount}</span></div><span className="text-xs text-zinc-500">3 {t('comments')}</span></div>
+                <div className="px-2 py-1 flex">
+                    <motion.button whileTap={{ scale: 1.1 }} onClick={() => onLike && onLike('facebook')} className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg font-medium text-sm transition-colors ${isLiked ? "text-blue-600 font-bold" : "text-zinc-600 hover:bg-zinc-50"}`}><ThumbsUp size={18} fill={isLiked ? "currentColor" : "none"} /> {t('likes')}</motion.button>
+                    <button className="flex-1 flex items-center justify-center gap-2 py-2 hover:bg-zinc-50 rounded-lg text-zinc-600 font-medium text-sm"><MessageSquare size={18} /> {t('comments')}</button>
+                </div>
+            </div>
+          )}
+      </div>
+    </div>
+  );
+};
 
 const TwitterLayout = ({ data, sectionType, onLike, isLiked, likeCount, onProjectClick, t }) => (
-  <div className="w-full bg-black text-[#e7e9ea] flex justify-center pb-20">
+  <div className="w-full bg-black text-[#e7e9ea] flex justify-center pb-20 text-left">
      <div className="w-full max-w-xl border-x border-zinc-800">
         {sectionType === 'intro' ? (
            <div className="pb-4 border-b border-zinc-800 pt-4">
@@ -1502,7 +1882,9 @@ const TwitterLayout = ({ data, sectionType, onLike, isLiked, likeCount, onProjec
                        {sectionType === 'projects' && (
                          <div className="mt-3">
                            <p className="mb-3">Thread of my work: 🧵👇 <span className="text-[#1d9bf0]">#ProjectHub #React #UI</span></p>
-                           <ProjectGallery projects={data.items} theme="twitter" onProjectClick={onProjectClick} t={t} />
+                           <div className="max-h-[600px] overflow-y-auto scrollbar-hide border border-zinc-800 rounded-2xl bg-zinc-900/20">
+                             <ProjectGallery projects={data.items} theme="twitter" onProjectClick={onProjectClick} t={t} />
+                           </div>
                          </div>
                        )}
 
@@ -1515,14 +1897,14 @@ const TwitterLayout = ({ data, sectionType, onLike, isLiked, likeCount, onProjec
                                   <motion.div key={i} initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: i * 0.1 }} className="flex gap-3 relative pb-6 group">
                                       <div className="flex flex-col items-center z-10 bg-black pt-1"><UserAvatar className="w-12 h-12 border-2 border-black" /></div>
                                       <div className="flex-1 pt-1 pr-2">
-                                         <div className="flex items-baseline gap-1"><span className="font-bold text-white hover:underline cursor-pointer">Warda Naeem</span><span className="text-zinc-500 text-[15px]">@warda.dev</span><span className="text-zinc-500 text-[15px]">·</span><span className="text-zinc-500 text-[15px]">{item.period.split(' ')[0]}</span></div>
-                                         <div className="mt-0.5 text-[15px] text-white/90"><span className="text-[#1d9bf0] font-bold block mb-1">🚀 {item.role}</span>At <span className="font-bold text-white">@{item.company}</span> — {item.desc}</div>
-                                         <div className="flex justify-between mt-3 max-w-sm text-zinc-500">
-                                            <div className="group flex items-center gap-1 hover:text-[#1d9bf0] cursor-pointer"><MessageSquare size={16} /><span className="text-xs opacity-0 group-hover:opacity-100 transition-opacity">{t('reply')}</span></div>
-                                            <div className="group flex items-center gap-1 hover:text-green-500 cursor-pointer"><Repeat size={16} /><span className="text-xs opacity-0 group-hover:opacity-100 transition-opacity">Repost</span></div>
-                                            <div className="group flex items-center gap-1 hover:text-pink-500 cursor-pointer" onClick={() => onLike && onLike('twitter')}><Heart size={16} /><span className="text-xs opacity-0 group-hover:opacity-100 transition-opacity">Like</span></div>
-                                            <div className="group flex items-center gap-1 hover:text-[#1d9bf0] cursor-pointer"><BarChart2 size={16} /></div>
-                                         </div>
+                                          <div className="flex items-baseline gap-1"><span className="font-bold text-white hover:underline cursor-pointer">Warda Naeem</span><span className="text-zinc-500 text-[15px]">@warda.dev</span><span className="text-zinc-500 text-[15px]">·</span><span className="text-zinc-500 text-[15px]">{item.period.split(' ')[0]}</span></div>
+                                          <div className="mt-0.5 text-[15px] text-white/90"><span className="text-[#1d9bf0] font-bold block mb-1">🚀 {item.role}</span>At <span className="font-bold text-white">@{item.company}</span> — {item.desc}</div>
+                                          <div className="flex justify-between mt-3 max-w-sm text-zinc-500">
+                                             <div className="group flex items-center gap-1 hover:text-[#1d9bf0] cursor-pointer"><MessageCircle size={16} /><span className="text-xs opacity-0 group-hover:opacity-100 transition-opacity">{t('reply')}</span></div>
+                                             <div className="group flex items-center gap-1 hover:text-green-500 cursor-pointer"><Repeat size={16} /><span className="text-xs opacity-0 group-hover:opacity-100 transition-opacity">Repost</span></div>
+                                             <div className="group flex items-center gap-1 hover:text-pink-500 cursor-pointer" onClick={() => onLike && onLike('twitter')}><Heart size={16} /><span className="text-xs opacity-0 group-hover:opacity-100 transition-opacity">Like</span></div>
+                                             <div className="group flex items-center gap-1 hover:text-[#1d9bf0] cursor-pointer"><BarChart2 size={16} /></div>
+                                          </div>
                                       </div>
                                   </motion.div>
                                ))}
@@ -1548,7 +1930,7 @@ const TwitterLayout = ({ data, sectionType, onLike, isLiked, likeCount, onProjec
                           </div>
                        )}
                     </div>
-                    <div className="flex justify-between mt-3 max-w-md text-zinc-500"><div className="flex items-center gap-2 group hover:text-[#1d9bf0]"><MessageCircle size={18} /><span className="text-xs">2</span></div><div className="flex items-center gap-2 group hover:text-green-500"><Repeat size={18} /><span className="text-xs">5</span></div><motion.div whileTap={{ scale: 1.2 }} onClick={() => onLike && onLike('twitter')} className={`flex items-center gap-2 group cursor-pointer ${isLiked ? "text-pink-500" : "hover:text-pink-500"}`}><Heart size={18} className={isLiked ? "fill-pink-500" : ""} /><span className="text-xs">{24 + likeCount}</span></motion.div></div>
+                    <div className="flex justify-between mt-3 max-w-sm text-zinc-500"><div className="flex items-center gap-2 group hover:text-[#1d9bf0]"><MessageCircle size={18} /><span className="text-xs">2</span></div><div className="flex items-center gap-2 group hover:text-green-500"><Repeat size={18} /><span className="text-xs">5</span></div><motion.div whileTap={{ scale: 1.2 }} onClick={() => onLike && onLike('twitter')} className={`flex items-center gap-2 group cursor-pointer ${isLiked ? "text-pink-500" : "hover:text-pink-500"}`}><Heart size={18} className={isLiked ? "fill-pink-500" : ""} /><span className="text-xs">{24 + likeCount}</span></motion.div></div>
                  </div>
               </div>
            </div>
@@ -1560,6 +1942,7 @@ const TwitterLayout = ({ data, sectionType, onLike, isLiked, likeCount, onProjec
 // --- MAIN APP ---
 export default function App() {
   const [activeTheme, setActiveTheme] = useState('tiktok');
+  const [tiktokTab, setTiktokTab] = useState('foryou'); // LIFTED STATE
   const [lang, setLang] = useState('en'); 
   
   const t = (key) => {
@@ -1647,7 +2030,8 @@ export default function App() {
       user: user, 
       t, 
       onProjectClick: openProject,
-      onLike: handleLike
+      onLike: handleLike,
+      activeTab: tiktokTab // Pass lifted state
     };
     
     switch (activeTheme) {
@@ -1674,7 +2058,28 @@ export default function App() {
       
       <GraffitiCanvas isActive={graffitiMode} onClose={() => setGraffitiMode(false)} t={t} />
 
-      <div className="fixed top-4 left-4 z-[999] flex gap-2">
+      {/* Global Theme Nav for TikTok */}
+      {activeTheme === 'tiktok' && !devMode && !isEditing && (
+        <div className="fixed top-4 w-full flex justify-center items-center z-[1001] pointer-events-none">
+          <div className="flex gap-4 pointer-events-auto bg-black/20 backdrop-blur-md px-6 py-2 rounded-full border border-white/10">
+              <button 
+                onClick={() => { setTiktokTab('foryou'); playSound('switch'); }} 
+                className={`cursor-pointer transition-all text-sm font-bold ${tiktokTab === 'foryou' ? 'text-white border-b-2 border-white pb-1' : 'text-white/40 hover:text-white/80'}`}
+              >
+                {t('forYou')}
+              </button>
+              <span className="opacity-40 text-white">|</span>
+              <button 
+                onClick={() => { setTiktokTab('live'); playSound('switch'); }} 
+                className={`cursor-pointer transition-all text-sm font-bold ${tiktokTab === 'live' ? 'text-white border-b-2 border-white pb-1' : 'text-white/40 hover:text-white/80'}`}
+              >
+                {t('live')}
+              </button>
+          </div>
+        </div>
+      )}
+
+      <div className="fixed top-4 left-4 z-[1002] flex gap-2">
           {!devMode && <button onClick={() => { setShowThemeMenu(!showThemeMenu); playSound('click'); }} className="flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-pink-600 to-purple-600 text-white font-bold shadow-lg border border-white/20 hover:scale-105 active:scale-95 transition-all pointer-events-auto"><Palette size={16} /><span className="text-xs font-bold tracking-wide hidden md:block">{t('theme')}</span></button>}
           
           {!devMode && <button onClick={toggleLang} className="flex items-center gap-2 px-4 py-2 rounded-full bg-black/80 backdrop-blur-md border border-white/20 text-white font-bold hover:scale-105 active:scale-95 transition-all pointer-events-auto">
@@ -1702,17 +2107,45 @@ export default function App() {
 
       <AnimatePresence mode="wait">
         {!isEditing && !devMode ? (
-           <motion.div key="view-mode" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className={`h-full w-full overflow-y-auto ${isSnapLayout ? 'snap-y snap-mandatory scroll-smooth' : 'scroll-smooth'}`} ref={containerRef}>
+            <motion.div 
+              key="view-mode" 
+              initial={{ opacity: 0 }} 
+              animate={{ opacity: 1 }} 
+              exit={{ opacity: 0 }} 
+              className={`h-full w-full ${
+                activeTheme === 'tiktok' && tiktokTab === 'live' 
+                  ? 'overflow-hidden touch-none' 
+                  : (isSnapLayout ? 'overflow-y-auto snap-y snap-mandatory' : 'overflow-y-auto')
+              } scroll-smooth`} 
+              ref={containerRef}
+            >
               {!isSnapLayout && <div className="h-20" />} 
-              {sections.map((section) => (<section key={section.id} id={section.id} className={`w-full relative overflow-hidden ${isSnapLayout ? 'h-full snap-start flex items-center justify-center' : 'h-auto'}`}>{renderSection(section)}</section>))}
+              
+              {/* Conditional Content Rendering for TikTok */}
+              {activeTheme === 'tiktok' && tiktokTab === 'live' ? (
+                 <section className="h-full w-full flex items-center justify-center overflow-hidden">
+                    {renderSection({ ...sections[0], type: 'live' })}
+                 </section>
+              ) : (
+                  sections.map((section) => (
+                    <section 
+                      key={section.id} 
+                      id={section.id} 
+                      className={`w-full relative overflow-hidden ${isSnapLayout ? 'h-full snap-start flex items-center justify-center' : 'h-auto'}`}
+                    >
+                      {renderSection(section)}
+                    </section>
+                  ))
+              )}
+              
               {!isSnapLayout && <div className="h-20" />}
-           </motion.div>
+            </motion.div>
         ) : (
           !devMode && (
             <motion.div key="edit-mode" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 z-40 bg-zinc-950/90 backdrop-blur-xl flex flex-col items-center justify-center p-6">
-               <h2 className="text-3xl font-black text-white mb-6">{t('remixFeed')}</h2>
-               <Reorder.Group axis="y" values={sections} onReorder={setSections} className="w-full max-w-sm space-y-3">{sections.map(section => (<Reorder.Item key={section.id} value={section} className="bg-zinc-900 border border-zinc-800 p-4 rounded-xl flex items-center gap-4 cursor-grab active:cursor-grabbing"><GripVertical className="text-zinc-600" /><div><p className="font-bold text-white">{section.title}</p><p className="text-xs text-zinc-500 uppercase">{section.type}</p></div></Reorder.Item>))}</Reorder.Group>
-               <button onClick={() => setIsEditing(false)} className="mt-8 bg-white text-black font-bold px-8 py-3 rounded-full hover:bg-gray-200 transition-colors">{t('saveLayout')}</button>
+                <h2 className="text-3xl font-black text-white mb-6">{t('remixFeed')}</h2>
+                <Reorder.Group axis="y" values={sections} onReorder={setSections} className="w-full max-sm:w-full max-w-sm space-y-3">{sections.map(section => (<Reorder.Item key={section.id} value={section} className="bg-zinc-900 border border-zinc-800 p-4 rounded-xl flex items-center gap-4 cursor-grab active:cursor-grabbing"><GripVertical className="text-zinc-600" /><div><p className="font-bold text-white">{section.title}</p><p className="text-xs text-zinc-500 uppercase">{section.type}</p></div></Reorder.Item>))}</Reorder.Group>
+                <button onClick={() => setIsEditing(false)} className="mt-8 bg-white text-black font-bold px-8 py-3 rounded-full hover:bg-gray-200 transition-colors">{t('saveLayout')}</button>
             </motion.div>
           )
         )}
